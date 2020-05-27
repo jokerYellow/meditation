@@ -55,7 +55,17 @@ class ViewController: UIViewController {
     
     let animation : CAShapeLayer = CAShapeLayer()
     
+    let animationView = UIView()
+    
     var start = false
+    
+    let settingButton = UIButton.init()
+    
+    let timerLabel = UILabel()
+    
+    let meditation = Meditation.shared
+    
+    var stoping = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,34 +80,74 @@ class ViewController: UIViewController {
             make.height.equalTo(ViewController.buttonHeight)
             make.centerX.equalTo(self.view)
         }
-         
-        self.view.layer.addSublayer(self.animation)
         
-        self.animation.frame = CGRect.init(x: (self.view.frame.width - animationSize.width)*0.5, y: 150, width: animationSize.width, height: animationSize.height)
+        self.view.addSubview(self.animationView)
+        self.animationView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(150)
+            make.centerX.equalTo(self.view)
+            make.size.equalTo(animationSize)
+        }
+        self.animationView.layer.addSublayer(self.animation)
+        
+        self.animation.frame = CGRect.init(x: 0, y: 0, width: animationSize.width, height: animationSize.height)
         self.animation.fillColor = UIColor.clear.cgColor
         self.animation.lineWidth = 3
         self.animation.strokeColor = UIColor.white.cgColor
         self.animation.path = self.circlePath(radius: Double(animationSize.width)*0.5, type: .eight)
         
         self.button.addTarget(self, action: #selector(click), for: .touchUpInside)
+        
+        self.settingButton.setImage(R.image.setting(), for: .normal)
+        
+        self.view.addSubview(self.settingButton)
+        self.settingButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).offset(-10)
+            make.size.equalTo(CGSize.init(width: 44, height: 44))
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
+        }
+        self.meditation.stateCallBack = { [weak self]state in
+            guard let self = self,self.stoping == false else  {
+                return
+            }
+            self.refreshState(state: state)
+        }
+        self.animationView.addSubview(self.timerLabel)
+        self.timerLabel.snp.makeConstraints { (make) in
+            make.center.equalTo(self.animationView)
+        } 
         // Do any additional setup after loading the view.
+    }
+    
+    func refreshState(state:Meditation.State){
+        self.button.setTitle(state.title, for: .normal)
+        self.timerLabel.text = state.lastTime
+        self.timerLabel.textColor = UIColor.white
+        switch state {
+        case .wait:
+            self.timerLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        default:
+            self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
+        }
     }
     
     @objc func click() -> Void {
         guard start == false else {
-            self.button.setTitle("开始", for: .normal)
             self.start = false
             self.button.isEnabled = false
-            UIView.animate(withDuration: 0.4, animations: {
-                self.animation.opacity = 0
+            self.stoping = true
+            UIView.animate(withDuration: 0.25, animations: {
+                self.animationView.alpha = 0
                 self.animation.shadowOpacity = 0
             }) { (_) in
                 
             }
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 self.animation.removeAllAnimations()
+                self.refreshState(state: self.meditation.state)
                 UIView.animate(withDuration: 0.25, delay: 1, options: .allowAnimatedContent, animations: {
-                    self.animation.opacity = 1
+                    self.animationView.alpha = 1
+                    self.stoping = false
+                    self.meditation.quit()
                 }, completion: { (_) in
                     self.button.isEnabled = true
                 })
@@ -106,7 +156,7 @@ class ViewController: UIViewController {
         }
         self.start = true
         self.beginAnimation()
-        self.button.setTitle("放弃", for: .normal)
+        meditation.start()
     }
 
     func beginAnimation()  {
@@ -114,7 +164,7 @@ class ViewController: UIViewController {
         key.keyPath = "path"
         key.duration = 30
         key.repeatCount = Float.greatestFiniteMagnitude
-        key.isRemovedOnCompletion = true
+        key.isRemovedOnCompletion = false
         key.fillMode = CAMediaTimingFillMode.both
 
         let first = self.circlePath(radius: Double(animationSize.width)*0.5,type: .eight)

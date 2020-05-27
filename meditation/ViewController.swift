@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Rswift
 
-private let animationSize = CGSize.init(width: 100, height: 100)
+private let animationSize = CGSize.init(width: 150, height: 150)
 
 extension UIImage{
     static func image(color:UIColor) -> UIImage {
@@ -24,6 +24,13 @@ extension UIImage{
         UIGraphicsEndImageContext()
         return image
     }
+}
+
+private enum AnimateType{
+    case eight
+    case sixteen
+    case round
+    case random
 }
 
 class ViewController: UIViewController {
@@ -66,7 +73,7 @@ class ViewController: UIViewController {
         
         self.animation.frame = CGRect.init(x: (self.view.frame.width - animationSize.width)*0.5, y: 100, width: animationSize.width, height: animationSize.height)
         self.animation.fillColor = UIColor.clear.cgColor
-        self.animation.lineWidth = 1
+        self.animation.lineWidth = 3
         self.animation.strokeColor = UIColor.white.cgColor
         self.beginAnimation()
         // Do any additional setup after loading the view.
@@ -75,24 +82,21 @@ class ViewController: UIViewController {
     func beginAnimation()  {
         let key = CAKeyframeAnimation()
         key.keyPath = "path"
-        key.duration = 10
+        key.duration = 30
         key.repeatCount = Float.greatestFiniteMagnitude
         key.isRemovedOnCompletion = true
         key.fillMode = CAMediaTimingFillMode.both
 
-        let first = self.circlePath(radius: Double(animationSize.width)*0.5)
+        let first = self.circlePath(radius: Double(animationSize.width)*0.5,type: .sixteen)
         key.values = [
             first,
-            self.circlePath(radius: Double(animationSize.width)*0.5),
-            self.circlePath(radius: Double(animationSize.width)*0.5),
-            self.circlePath(radius: Double(animationSize.width)*0.5),
-            self.circlePath(radius: Double(animationSize.width)*0.5),
-            first,
+            self.circlePath(radius: Double(animationSize.width)*0.5,type: .eight),
+            first, 
         ]
         
         let rotate = CAKeyframeAnimation()
         rotate.keyPath = "transform.rotation.z"
-        rotate.duration = 12
+        rotate.duration = 30
         rotate.repeatCount = Float.greatestFiniteMagnitude
         rotate.isRemovedOnCompletion = false
         rotate.values = [
@@ -101,11 +105,41 @@ class ViewController: UIViewController {
             Float.pi*2,
         ]
         
+        let lineWidth = CAKeyframeAnimation()
+        lineWidth.keyPath = "lineWidth"
+        lineWidth.duration = 30
+        lineWidth.repeatCount = Float.greatestFiniteMagnitude
+        lineWidth.isRemovedOnCompletion = false
+        lineWidth.values = [
+            3,
+            1,
+            3,
+        ]
+        
+        let shadowWidth = CAKeyframeAnimation()
+        shadowWidth.keyPath = "shadowRadius"
+        shadowWidth.duration = 10
+        shadowWidth.repeatCount = Float.greatestFiniteMagnitude
+        shadowWidth.isRemovedOnCompletion = false
+        shadowWidth.values = [
+            10,
+            4,
+            10,
+        ]
+        self.animation.shadowOpacity = 0.3
+        self.animation.shadowColor = UIColor.black.cgColor
+        
         self.animation.add(key, forKey: nil)
-//        self.animation.add(rotate, forKey: nil)
+        self.animation.add(rotate, forKey: nil)
+        self.animation.add(lineWidth, forKey: nil)
+        self.animation.add(shadowWidth, forKey: nil)
     }
     
-    func circlePath(radius:Double) -> CGPath {
+    private func circlePath(radius:Double,type:AnimateType) -> CGPath {
+        if type == .round{
+            return CGPath.init(ellipseIn: CGRect.init(x: 0, y: 0, width: radius*2, height: radius*2), transform: nil)
+        }
+        let pi = 3.1419
         let path = UIBezierPath.init()
         let g2:Double = 1.414
         let g2radius = Double(radius*(g2-1)/g2)
@@ -119,32 +153,66 @@ class ViewController: UIViewController {
         let p7 = CGPoint.init(x: g2radius, y: 2*radius - g2radius)
         let p8 = CGPoint.init(x: 0, y: radius)
         
+        let p12 = CGPoint.init(x: radius*(1-sin(22.5/180.0*pi)), y: radius*(1-cos(22.5/180.0*pi)))
+        let p23 = CGPoint.init(x: radius*(1+sin(22.5/180.0*pi)), y: radius*(1-cos(22.5/180.0*pi)))
+        let p34 = CGPoint.init(x: radius*(1+cos(22.5/180.0*pi)), y: radius*(1-sin(22.5/180.0*pi)))
+        let p45 = CGPoint.init(x: radius*(1+cos(22.5/180.0*pi)), y: radius*(1+sin(22.5/180.0*pi)))
+        let p56 = CGPoint.init(x: radius*(1+sin(22.5/180.0*pi)), y: radius*(1+cos(22.5/180.0*pi)))
+        let p67 = CGPoint.init(x: radius*(1-sin(22.5/180.0*pi)), y: radius*(1+cos(22.5/180.0*pi)))
+        let p78 = CGPoint.init(x: radius*(1-cos(22.5/180.0*pi)), y: radius*(1+sin(22.5/180.0*pi)))
+        let p81 = CGPoint.init(x: radius*(1-cos(22.5/180.0*pi)), y: radius*(1-sin(22.5/180.0*pi)))
+        
         let origin = p1
         path.move(to: origin)
-        
-        path.addQuadCurve(to: p2, controlPoint: CGPoint.init(x: radius*(1-sin(22.5/180.0*Double(Float.pi))), y: radius*(1-cos(22.5/180.0*Double(Float.pi)))))
-        
-        path.addQuadCurve(to: p3, controlPoint: CGPoint.init(x: radius*(1+sin(22.5/180.0*Double(Float.pi))), y: radius*(1-cos(22.5/180.0*Double(Float.pi)))))
-        
-        path.addQuadCurve(to: p4, controlPoint: CGPoint.init(x: radius*(1+cos(22.5/180.0*Double(Float.pi))), y: radius*(1-sin(22.5/180.0*Double(Float.pi)))))
-        path.addQuadCurve(to: p5, controlPoint: CGPoint.init(x: radius*(1+cos(22.5/180.0*Double(Float.pi))), y: radius*(1+sin(22.5/180.0*Double(Float.pi)))))
-        
-        path.addQuadCurve(to: p6, controlPoint: CGPoint.init(x: radius*(1+sin(22.5/180.0*Double(Float.pi))), y: radius*(1+cos(22.5/180.0*Double(Float.pi)))))
-        path.addQuadCurve(to: p7, controlPoint: CGPoint.init(x: radius*(1-sin(22.5/180.0*Double(Float.pi))), y: radius*(1+cos(22.5/180.0*Double(Float.pi)))))
-        
-        path.addQuadCurve(to: p8, controlPoint: CGPoint.init(x: radius*(1-cos(22.5/180.0*Double(Float.pi))), y: radius*(1+sin(22.5/180.0*Double(Float.pi)))))
-        
-        path.addQuadCurve(to: origin, controlPoint: CGPoint.init(x: radius*(1-cos(22.5/180.0*Double(Float.pi))), y: radius*(1-sin(22.5/180.0*Double(Float.pi)))))
-        
+        if type == .eight {
+            path.addLine(to: midOf(p1: p1, p2: p2))
+            path.addLine(to: p2)
+            path.addLine(to: midOf(p1: p2, p2: p3))
+            path.addLine(to: p3)
+            path.addLine(to: midOf(p1: p3, p2: p4))
+            path.addLine(to: p4)
+            path.addLine(to: midOf(p1: p4, p2: p5))
+            path.addLine(to: p5)
+            path.addLine(to: midOf(p1: p5, p2: p6))
+            path.addLine(to: p6)
+            path.addLine(to: midOf(p1: p6, p2: p7))
+            path.addLine(to: p7)
+            path.addLine(to: midOf(p1: p7, p2: p8))
+            path.addLine(to: p8)
+            path.addLine(to: midOf(p1: p8, p2: p1))
+            path.addLine(to: p1)
+        }else if type == .sixteen{
+            path.addLine(to: p12)
+            path.addLine(to: p2)
+            path.addLine(to: p23)
+            path.addLine(to: p3)
+            path.addLine(to: p34)
+            path.addLine(to: p4)
+            path.addLine(to: p45)
+            path.addLine(to: p5)
+            path.addLine(to: p56)
+            path.addLine(to: p6)
+            path.addLine(to: p67)
+            path.addLine(to: p7)
+            path.addLine(to: p78)
+            path.addLine(to: p8)
+            path.addLine(to: p81)
+            path.addLine(to: p1)
+        }
+        path.close()
         return path.cgPath
     }
     
     func randomPoint(_ p:CGPoint) -> CGPoint {
-        return CGPoint.init(x: Double(p.x) * randomRadius(), y: Double(p.y)*randomRadius())
+        let r = randomRadius()
+        return CGPoint.init(x: Double(p.x) * r, y: Double(p.y) * r)
     }
     
     func randomRadius() -> Double {
-        return Double.random(in: 0.9..<1.1)
+        return Double.random(in: 1.0..<1.2)
     }
     
+    func midOf(p1:CGPoint,p2:CGPoint) -> CGPoint{
+        return CGPoint.init(x: p1.x + (p2.x - p1.x)*0.5, y: p1.y + (p2.y - p1.y)*0.5)
+    }
 }

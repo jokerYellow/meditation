@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Rswift
 
-private let animationSize = CGSize.init(width: 150, height: 150)
+private let animationSize = CGSize.init(width: 200, height: 200)
 
 extension UIImage{
     static func image(color:UIColor) -> UIImage {
@@ -55,6 +55,8 @@ class ViewController: UIViewController {
     
     let animation : CAShapeLayer = CAShapeLayer()
     
+    var start = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(self.backImage)
@@ -71,12 +73,40 @@ class ViewController: UIViewController {
          
         self.view.layer.addSublayer(self.animation)
         
-        self.animation.frame = CGRect.init(x: (self.view.frame.width - animationSize.width)*0.5, y: 100, width: animationSize.width, height: animationSize.height)
+        self.animation.frame = CGRect.init(x: (self.view.frame.width - animationSize.width)*0.5, y: 150, width: animationSize.width, height: animationSize.height)
         self.animation.fillColor = UIColor.clear.cgColor
         self.animation.lineWidth = 3
         self.animation.strokeColor = UIColor.white.cgColor
-        self.beginAnimation()
+        self.animation.path = self.circlePath(radius: Double(animationSize.width)*0.5, type: .eight)
+        
+        self.button.addTarget(self, action: #selector(click), for: .touchUpInside)
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func click() -> Void {
+        guard start == false else {
+            self.button.setTitle("开始", for: .normal)
+            self.start = false
+            self.button.isEnabled = false
+            UIView.animate(withDuration: 0.4, animations: {
+                self.animation.opacity = 0
+                self.animation.shadowOpacity = 0
+            }) { (_) in
+                
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                self.animation.removeAllAnimations()
+                UIView.animate(withDuration: 0.25, delay: 1, options: .allowAnimatedContent, animations: {
+                    self.animation.opacity = 1
+                }, completion: { (_) in
+                    self.button.isEnabled = true
+                })
+            }
+            return
+        }
+        self.start = true
+        self.beginAnimation()
+        self.button.setTitle("放弃", for: .normal)
     }
 
     func beginAnimation()  {
@@ -87,10 +117,10 @@ class ViewController: UIViewController {
         key.isRemovedOnCompletion = true
         key.fillMode = CAMediaTimingFillMode.both
 
-        let first = self.circlePath(radius: Double(animationSize.width)*0.5,type: .sixteen)
+        let first = self.circlePath(radius: Double(animationSize.width)*0.5,type: .eight)
         key.values = [
             first,
-            self.circlePath(radius: Double(animationSize.width)*0.5,type: .eight),
+            self.circlePath(radius: Double(animationSize.width)*0.5,type: .sixteen),
             first, 
         ]
         
@@ -104,6 +134,7 @@ class ViewController: UIViewController {
             Float.pi*1,
             Float.pi*2,
         ]
+        rotate.fillMode = CAMediaTimingFillMode.both
         
         let lineWidth = CAKeyframeAnimation()
         lineWidth.keyPath = "lineWidth"
@@ -121,11 +152,28 @@ class ViewController: UIViewController {
         shadowWidth.duration = 10
         shadowWidth.repeatCount = Float.greatestFiniteMagnitude
         shadowWidth.isRemovedOnCompletion = false
+        shadowWidth.fillMode = CAMediaTimingFillMode.both
         shadowWidth.values = [
             10,
             4,
             10,
         ]
+        
+        
+        let scale = CAKeyframeAnimation()
+        scale.keyPath = "transform.scale"
+        scale.duration = 30
+        scale.repeatCount = Float.greatestFiniteMagnitude
+        scale.isRemovedOnCompletion = false
+        scale.fillMode = CAMediaTimingFillMode.both
+        scale.values = [
+            1,
+            1.1,
+            0.9,
+            1.1,
+            1,
+        ]
+        
         self.animation.shadowOpacity = 0.3
         self.animation.shadowColor = UIColor.black.cgColor
         
@@ -133,6 +181,7 @@ class ViewController: UIViewController {
         self.animation.add(rotate, forKey: nil)
         self.animation.add(lineWidth, forKey: nil)
         self.animation.add(shadowWidth, forKey: nil)
+        self.animation.add(scale, forKey: nil)
     }
     
     private func circlePath(radius:Double,type:AnimateType) -> CGPath {

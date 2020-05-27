@@ -1,0 +1,69 @@
+PODS:
+  - Alamofire (4.8.2)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - Kingfisher (5.6.0)
+  - Moya/Core (13.0.1):
+    - Alamofire (~> 4.1)
+    - Result (~> 4.1)
+  - Moya/RxSwift (13.0.1):
+    - Moya/Core
+    - RxSwift (~> 4.0)
+  - "NSObject+Rx (4.4.1)":
+    - RxSwift (~> 4.3)
+  - R.swift (5.0.3):
+    - R.swift.Library (~> 5.0.0)
+  - R.swift.Library (5.0.1)
+  - ReachabilitySwift (4.3.1)
+  - Result (4.1.0)
+  - RxSwift (4.5.0)
+  - SnapKit (5.0.0)
+  - Toast-Swift (5.0.0)
+  - UIColor_Hex_Swift (5.1.0)
+
+DEPENDENCIES:
+  - FMDB
+  - Kingfisher
+  - Moya/RxSwift
+  - "NSObject+Rx"
+  - R.swift
+  - ReachabilitySwift
+  - SnapKit
+  - Toast-Swift
+  - UIColor_Hex_Swift (~> 5.1.0)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - FMDB
+    - Kingfisher
+    - Moya
+    - "NSObject+Rx"
+    - R.swift
+    - R.swift.Library
+    - ReachabilitySwift
+    - Result
+    - RxSwift
+    - SnapKit
+    - Toast-Swift
+    - UIColor_Hex_Swift
+
+SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  Kingfisher: 1a50df6880a60bae26f3e21a0df3d17b892f5e0b
+  Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
+  "NSObject+Rx": 9884a92f19b610795c431e10b4e601913b59c9e9
+  R.swift: f5a87643b91ea569d23d6afb3eee9c743edde239
+  R.swift.Library: cfe85d569d9bae6cb262922db130e7c3a7a5fad1
+  ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
+  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  Toast-Swift: 36f4720243c8582c2be243a60a51e193c761f541
+  UIColor_Hex_Swift: 8be7432edacb7fa91c78aa05ef3c30b66e4f9415
+
+PODFILE CHECKSUM: ac21af8422dd83ebb2f652ce2a03ad4f98ae269a
+
+COCOAPODS: 1.9.2

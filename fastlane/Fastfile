@@ -1,0 +1,41 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+xcode_select "/Applications/Xcode.app"
+
+pgy_api_key = "your_pgy_api_key"
+pgy_user_key = "your_pgy_user_key"
+
+platform :ios do
+  desc "Description of what the lane does"
+
+  lane :increment do 
+    increment_build_number(
+        )
+  end
+
+  lane :beta do
+    increment_build_number
+    build_app(scheme: "meditation",
+              workspace: "meditation.xcworkspace",
+              export_method: "development",
+              output_directory: "build",
+              include_bitcode: true) 
+    pgyer(api_key:pgy_api_key, user_key: pgy_user_key)
+
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+end

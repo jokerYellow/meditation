@@ -93,7 +93,7 @@ class ViewController: UIViewController {
         self.animation.fillColor = UIColor.clear.cgColor
         self.animation.lineWidth = 3
         self.animation.strokeColor = UIColor.white.cgColor
-        self.animation.path = self.circlePath(radius: Double(animationSize.width)*0.5, type: .eight)
+        self.animation.path = self.circlePath(radius: Double(animationSize.width)*0.5, type: .random)
         
         self.button.addTarget(self, action: #selector(click), for: .touchUpInside)
         
@@ -160,6 +160,22 @@ class ViewController: UIViewController {
     }
 
     func beginAnimation()  {
+        self.animation.shadowColor = UIColor.black.cgColor
+        self.animation.add(self.animations(), forKey: nil)
+        for index in 0..<2{
+            let sp = CAShapeLayer()
+            sp.shadowColor = UIColor.black.cgColor
+            sp.strokeColor = UIColor.white.cgColor
+            sp.fillColor = UIColor.clear.cgColor
+            self.animationView.layer.addSublayer(sp)
+            sp.frame = self.animationView.bounds
+            sp.frame.origin.x += CGFloat(index*4)
+
+            sp.add(self.animations(), forKey: nil)
+        }
+    }
+    
+    func animations() -> CAAnimationGroup {
         let key = CAKeyframeAnimation()
         key.keyPath = "path"
         key.duration = 30
@@ -167,13 +183,15 @@ class ViewController: UIViewController {
         key.isRemovedOnCompletion = false
         key.fillMode = CAMediaTimingFillMode.both
 
-        let first = self.circlePath(radius: Double(animationSize.width)*0.5,type: .eight)
+        let first = self.circlePath(radius: Double(animationSize.width)*0.5,type: .random)
         key.values = [
             first,
-            self.circlePath(radius: Double(animationSize.width)*0.5,type: .sixteen),
-            first, 
+            self.circlePath(radius: Double(animationSize.width)*0.5,type: .random),
+            self.circlePath(radius: Double(animationSize.width)*0.5,type: .random),
+            self.circlePath(radius: Double(animationSize.width)*0.5,type: .random),
+            first,
         ]
-        
+               
         let rotate = CAKeyframeAnimation()
         rotate.keyPath = "transform.rotation.z"
         rotate.duration = 30
@@ -181,22 +199,22 @@ class ViewController: UIViewController {
         rotate.isRemovedOnCompletion = false
         rotate.values = [
             0,
-            Float.pi*1,
+            Float.pi,
             Float.pi*2,
-        ]
+            ]
         rotate.fillMode = CAMediaTimingFillMode.both
-        
+               
         let lineWidth = CAKeyframeAnimation()
         lineWidth.keyPath = "lineWidth"
         lineWidth.duration = 30
         lineWidth.repeatCount = Float.greatestFiniteMagnitude
         lineWidth.isRemovedOnCompletion = false
         lineWidth.values = [
-            3,
-            1,
-            3,
+           1,
+           2,
+           1,
         ]
-        
+               
         let shadowWidth = CAKeyframeAnimation()
         shadowWidth.keyPath = "shadowRadius"
         shadowWidth.duration = 10
@@ -204,12 +222,11 @@ class ViewController: UIViewController {
         shadowWidth.isRemovedOnCompletion = false
         shadowWidth.fillMode = CAMediaTimingFillMode.both
         shadowWidth.values = [
-            10,
-            4,
-            10,
+           10,
+           4,
+           10,
         ]
-        
-        
+               
         let scale = CAKeyframeAnimation()
         scale.keyPath = "transform.scale"
         scale.duration = 30
@@ -217,26 +234,27 @@ class ViewController: UIViewController {
         scale.isRemovedOnCompletion = false
         scale.fillMode = CAMediaTimingFillMode.both
         scale.values = [
-            1,
-            1.1,
-            0.9,
-            1.1,
-            1,
+           1,
+           1.2,
+           0.7,
+           1.2,
+           1,
         ]
+        let group = CAAnimationGroup.init()
+        group.animations = [key,rotate,lineWidth,shadowWidth,scale]
+        group.duration = 30
+        group.repeatCount = .greatestFiniteMagnitude
+        group.isRemovedOnCompletion = false
+        group.fillMode = .backwards
         
-        self.animation.shadowOpacity = 0.3
-        self.animation.shadowColor = UIColor.black.cgColor
-        
-        self.animation.add(key, forKey: nil)
-        self.animation.add(rotate, forKey: nil)
-        self.animation.add(lineWidth, forKey: nil)
-        self.animation.add(shadowWidth, forKey: nil)
-        self.animation.add(scale, forKey: nil)
+        return group
     }
     
     private func circlePath(radius:Double,type:AnimateType) -> CGPath {
         if type == .round{
             return CGPath.init(ellipseIn: CGRect.init(x: 0, y: 0, width: radius*2, height: radius*2), transform: nil)
+        }else if type == .random{
+            return randomRound(ra: radius)
         }
         let pi = 3.1419
         let path = UIBezierPath.init()
@@ -302,13 +320,35 @@ class ViewController: UIViewController {
         return path.cgPath
     }
     
+    func randomRound(ra:Double)->CGPath{
+        let path = UIBezierPath.init()
+        let radius = ra
+        let p1 = CGPoint.init(x: 0, y: 0)
+        let p2 = CGPoint.init(x: Double(radius), y: 0.0)
+        let p3 = CGPoint.init(x: 2*radius, y: 0)
+        let p4 = CGPoint.init(x: 2*radius, y: radius)
+        let p5 = CGPoint.init(x: 2*radius, y: 2*radius)
+        let p6 = CGPoint.init(x: radius, y: 2*radius)
+        let p7 = CGPoint.init(x: 0, y: 2*radius)
+        let p8 = CGPoint.init(x: 0, y: radius)
+        
+        let origin = p2
+        path.move(to: origin)
+        path.addQuadCurve(to: p4, controlPoint: randomPoint(p3))
+        path.addQuadCurve(to: p6, controlPoint: randomPoint(p5))
+        path.addQuadCurve(to: p8, controlPoint: randomPoint(p7))
+        path.addQuadCurve(to: origin, controlPoint: randomPoint(p1))
+        path.close()
+        return path.cgPath
+    }
+    
     func randomPoint(_ p:CGPoint) -> CGPoint {
-        let r = randomRadius()
-        return CGPoint.init(x: Double(p.x) * r, y: Double(p.y) * r)
+        let r = CGPoint.init(x: 30.0*randomRadius(), y: 30.0*randomRadius())
+        return CGPoint.init(x: p.x + r.x, y: p.y + r.y)
     }
     
     func randomRadius() -> Double {
-        return Double.random(in: 1.0..<1.2)
+        return Double.random(in: -1..<1)
     }
     
     func midOf(p1:CGPoint,p2:CGPoint) -> CGPoint{

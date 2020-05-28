@@ -138,7 +138,7 @@ class Meditation {
         self.state = .wait(times: self.state.times)
     }
 
-    func sendNotification(content: String, interval: TimeInterval) {
+    func sendNotification(notification: String, interval: TimeInterval) {
         var options = UNAuthorizationOptions.init(arrayLiteral: .alert, .sound)
         if #available(iOS 13.0, *) {
             options.insert(.announcement)
@@ -148,7 +148,7 @@ class Meditation {
                 return
             }
             let content = UNMutableNotificationContent.init()
-            content.body = content
+            content.body = notification
             let request = UNNotificationRequest.init(identifier: id, content: content, trigger:
             UNTimeIntervalNotificationTrigger.init(timeInterval: interval, repeats: false))
             UNUserNotificationCenter.current().add(request, withCompletionHandler: { (_) in

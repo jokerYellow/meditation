@@ -17,7 +17,7 @@ private extension Int {
     }
 }
 
-class Meditation {
+class Meditation : NSObject{
 
     enum State {
         case wait(times: Int)
@@ -90,7 +90,8 @@ class Meditation {
 
     var timer: Timer?
 
-    init() {
+    override init() {
+        super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(selfCheck), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
@@ -112,7 +113,7 @@ class Meditation {
 
     func start() {
         self.state = .isWorking(times: self.state.times, time: self.config.workTime, startDate: Date())
-        self.sendNotification(content: "完成一个番茄钟，休息一下吧", interval: self.config.workTime.timeinterval)
+        self.sendNotification(notification: "完成一个番茄钟，休息一下吧", interval: self.config.workTime.timeinterval)
     }
 
     func startTimer() {
@@ -131,7 +132,7 @@ class Meditation {
     func haveAbreak() {
         let time = self.state.times > self.config.workPoint ? self.config.longBreakTime : self.config.breakTime
         self.state = .isBreak(times: self.state.times, time: time, startDate: Date())
-        self.sendNotification(content: "已经休息\(time)分钟了，开始下一个番茄吧", interval: time.timeinterval)
+        self.sendNotification(notification: "已经休息\(time)分钟了，开始下一个番茄吧", interval: time.timeinterval)
     }
 
     func quit() {
@@ -143,17 +144,33 @@ class Meditation {
         if #available(iOS 13.0, *) {
             options.insert(.announcement)
         }
+        UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: options) { (flag, error) in
             guard flag else {
                 return
             }
             let content = UNMutableNotificationContent.init()
             content.body = notification
+            content.sound = .default
             let request = UNNotificationRequest.init(identifier: id, content: content, trigger:
             UNTimeIntervalNotificationTrigger.init(timeInterval: interval, repeats: false))
             UNUserNotificationCenter.current().add(request, withCompletionHandler: { (_) in
             })
         }
     }
+}
 
+extension Meditation : UNUserNotificationCenterDelegate{
+    func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.init(arrayLiteral: .alert,.sound))
+    }
+    
 }

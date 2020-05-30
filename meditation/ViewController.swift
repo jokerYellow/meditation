@@ -125,38 +125,55 @@ class ViewController: UIViewController {
         switch state {
         case .wait:
             self.timerLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        default:
+            if self.start {
+                self.stopWork()
+            }
+            self.start = false
+        case .isWorking:
+            self.start = true
+            self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
+        case .isBreak:
             self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
         }
     }
     
     @objc func click() -> Void {
-        guard start == false else {
-            self.start = false
-            self.button.isEnabled = false
-            self.stoping = true
-            UIView.animate(withDuration: 0.25, animations: {
-                self.animationView.alpha = 0
-                self.animation.shadowOpacity = 0
-            }) { (_) in
-                
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                self.animation.removeAllAnimations()
-                self.refreshState(state: self.meditation.state)
-                UIView.animate(withDuration: 0.25, delay: 1, options: .allowAnimatedContent, animations: {
-                    self.animationView.alpha = 1
-                    self.stoping = false
-                    self.meditation.quit()
-                }, completion: { (_) in
-                    self.button.isEnabled = true
-                })
-            }
-            return
+        switch meditation.state {
+        case .isWorking:
+            self.meditation.quit()
+        case .isBreak:
+            self.startWork()
+            meditation.cancelBreak()
+            meditation.start()
+        case .wait:
+            self.startWork()
+            meditation.start()
         }
-        self.start = true
+    }
+    
+    func startWork(){
         self.beginAnimation()
-        meditation.start()
+    }
+    
+    func stopWork(){
+        self.button.isEnabled = false
+        self.stoping = true
+        UIView.animate(withDuration: 0.25, animations: {
+            self.animationView.alpha = 0
+            self.animation.shadowOpacity = 0
+        }) { (_) in
+            
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.animation.removeAllAnimations()
+            self.refreshState(state: self.meditation.state)
+            UIView.animate(withDuration: 0.25, delay: 1, options: .allowAnimatedContent, animations: {
+                self.animationView.alpha = 1
+                self.stoping = false
+            }, completion: { (_) in
+                self.button.isEnabled = true
+            })
+        }
     }
 
     func beginAnimation()  {

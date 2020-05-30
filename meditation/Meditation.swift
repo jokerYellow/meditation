@@ -8,12 +8,18 @@
 
 import UIKit
 import UserNotifications
+ 
+private enum notificationId : String{
+    case workDone = "com.pipasese.meditation.workDone"
+    case breakOver = "com.pipasese.meditation.breakOver"
+}
 
-private let id = "com.pipasese.meditation"
-
-private extension Int {
-    var timeinterval: TimeInterval {
-        return TimeInterval(self * 60)
+extension Int {
+    var duration: String{
+        if self/60 > 0 {
+            return "\(self/60)分钟"
+        }
+        return "\(self)秒钟"
     }
 }
 
@@ -47,8 +53,8 @@ class Meditation : NSObject{
         var lastTime: String {
             switch self {
             case .isWorking(_, let time, let startDate), .isBreak(_, let time, let startDate):
-                let duration = Date().timeIntervalSince(startDate)
-                let last = Int(time.timeinterval - duration)
+                let duration = Int(Date().timeIntervalSince(startDate))
+                let last = Int(time - duration)
                 if last <= 0 {
                     return "00:00"
                 }
@@ -60,10 +66,11 @@ class Meditation : NSObject{
     }
 
     struct Config {
-        var workTime: Int = 25
-        var breakTime: Int = 5
-        var longBreakTime: Int = 15
-        var workPoint: Int = 4
+        //seconds
+        var workTime: Int = 10
+        var breakTime: Int = 3
+        var longBreakTime: Int = 6
+        var workPoint: Int = 2
     }
 
     static let shared = Meditation()
@@ -100,11 +107,11 @@ class Meditation : NSObject{
         case .wait:
             break
         case .isBreak(let times, let time, let startDate):
-            if startDate.addingTimeInterval(time.timeinterval).compare(Date()) == .orderedAscending {
+            if startDate.addingTimeInterval(TimeInterval(time)).compare(Date()) == .orderedAscending {
                 self.state = .wait(times: times)
             }
         case .isWorking(_, let time, let startDate):
-            if startDate.addingTimeInterval(time.timeinterval).compare(Date()) == .orderedAscending {
+            if startDate.addingTimeInterval(TimeInterval(time)).compare(Date()) == .orderedAscending {
                 self.haveAbreak()
             }
             break
@@ -112,12 +119,17 @@ class Meditation : NSObject{
     }
 
     func start() {
-        self.state = .isWorking(times: self.state.times, time: self.config.workTime, startDate: Date())
-        self.sendNotification(notification: "完成一个番茄钟，休息一下吧", interval: self.config.workTime.timeinterval)
+        self.state = .isWorking(times: self.state.times+1, time: self.config.workTime, startDate: Date())
+        self.sendNotification(notification: "完成一个番茄钟，休息一下吧", interval: TimeInterval(self.config.workTime), id: .workDone)
     }
-
+    
+    func cancelBreak() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationId.breakOver.rawValue])
+    }
+    
     func startTimer() {
         let timer = Timer.init(timeInterval: 1, repeats: true) { (_) in
+            self.selfCheck()
             self.stateCallBack?(self.state)
         }
         RunLoop.main.add(timer, forMode: .common)
@@ -130,16 +142,17 @@ class Meditation : NSObject{
     }
 
     func haveAbreak() {
-        let time = self.state.times > self.config.workPoint ? self.config.longBreakTime : self.config.breakTime
+        let time = self.state.times >= self.config.workPoint ? self.config.longBreakTime : self.config.breakTime
         self.state = .isBreak(times: self.state.times, time: time, startDate: Date())
-        self.sendNotification(notification: "已经休息\(time)分钟了，开始下一个番茄吧", interval: time.timeinterval)
+        self.sendNotification(notification: "已经休息\(time.duration)了，开始下一个番茄吧", interval: TimeInterval(time), id : .breakOver)
     }
 
     func quit() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationId.workDone.rawValue])
         self.state = .wait(times: self.state.times)
     }
 
-    func sendNotification(notification: String, interval: TimeInterval) {
+    private func sendNotification(notification: String, interval: TimeInterval,id: notificationId) {
         var options = UNAuthorizationOptions.init(arrayLiteral: .alert, .sound)
         if #available(iOS 13.0, *) {
             options.insert(.announcement)
@@ -152,7 +165,7 @@ class Meditation : NSObject{
             let content = UNMutableNotificationContent.init()
             content.body = notification
             content.sound = .default
-            let request = UNNotificationRequest.init(identifier: id, content: content, trigger:
+            let request = UNNotificationRequest.init(identifier: id.rawValue, content: content, trigger:
             UNTimeIntervalNotificationTrigger.init(timeInterval: interval, repeats: false))
             UNUserNotificationCenter.current().add(request, withCompletionHandler: { (_) in
             })

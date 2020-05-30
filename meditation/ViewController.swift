@@ -65,8 +65,6 @@ class ViewController: UIViewController {
     
     let meditation = Meditation.shared
     
-    var stoping = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(self.backImage)
@@ -106,10 +104,7 @@ class ViewController: UIViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
         }
         self.meditation.stateCallBack = { [weak self]state in
-            guard let self = self,self.stoping == false else  {
-                return
-            }
-            self.refreshState(state: state)
+            self?.refreshState(state: state)
         }
         self.animationView.addSubview(self.timerLabel)
         self.timerLabel.snp.makeConstraints { (make) in
@@ -157,7 +152,6 @@ class ViewController: UIViewController {
     
     func stopWork(){
         self.button.isEnabled = false
-        self.stoping = true
         UIView.animate(withDuration: 0.25, animations: {
             self.animationView.alpha = 0
             self.animation.shadowOpacity = 0
@@ -169,7 +163,6 @@ class ViewController: UIViewController {
             self.refreshState(state: self.meditation.state)
             UIView.animate(withDuration: 0.25, delay: 1, options: .allowAnimatedContent, animations: {
                 self.animationView.alpha = 1
-                self.stoping = false
             }, completion: { (_) in
                 self.button.isEnabled = true
             })

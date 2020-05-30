@@ -10,6 +10,7 @@
 		89A344B5732C99B6F01F085A /* Pods_meditationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F904402ABD4AF494BF4E2F4 /* Pods_meditationTests.framework */; };
 		BD7C3A421DD710AFBA99F63D /* Pods_meditation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23501BADD3D9561084A57A3C /* Pods_meditation.framework */; };
 		BF5445F822F8732A003F7A30 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5445F722F8732A003F7A30 /* R.generated.swift */; };
+		BF7AC323248293550060F38C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7AC322248293550060F38C /* Util.swift */; };
 		BF85D331247E67860064E805 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF85D330247E67860064E805 /* SettingViewController.swift */; };
 		BF85D333247E6DE00064E805 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF85D332247E6DE00064E805 /* Meditation.swift */; };
 		BFE28F3922F7A9CB005C979E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE28F3822F7A9CB005C979E /* AppDelegate.swift */; };
@@ -36,6 +37,7 @@
 		42E68EFCA1E114F714228A55 /* Pods-meditationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meditationTests.debug.xcconfig"; path = "Target Support Files/Pods-meditationTests/Pods-meditationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F904402ABD4AF494BF4E2F4 /* Pods_meditationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_meditationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF5445F722F8732A003F7A30 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		BF7AC322248293550060F38C /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		BF85D330247E67860064E805 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		BF85D332247E6DE00064E805 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
 		BF85D334247E70490064E805 /* 木鱼.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "木鱼.entitlements"; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				BFE28F3822F7A9CB005C979E /* AppDelegate.swift */,
 				BFE28F3A22F7A9CB005C979E /* ViewController.swift */,
 				BF85D332247E6DE00064E805 /* Meditation.swift */,
+				BF7AC322248293550060F38C /* Util.swift */,
 				BF85D330247E67860064E805 /* SettingViewController.swift */,
 				BFE28F3C22F7A9CB005C979E /* Main.storyboard */,
 				BFE28F3F22F7A9CC005C979E /* Assets.xcassets */,
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF85D333247E6DE00064E805 /* Meditation.swift in Sources */,
+				BF7AC323248293550060F38C /* Util.swift in Sources */,
 				BFE28F3B22F7A9CB005C979E /* ViewController.swift in Sources */,
 				BFE28F3922F7A9CB005C979E /* AppDelegate.swift in Sources */,
 				BF5445F822F8732A003F7A30 /* R.generated.swift in Sources */,

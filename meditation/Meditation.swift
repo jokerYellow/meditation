@@ -25,7 +25,48 @@ extension Int {
 
 class Meditation : NSObject{
 
-    enum State {
+    enum State :Codable {
+        
+        enum CodingKeys:CodingKey {
+            case wait
+            case isBreak
+            case isWorking
+            case times
+            case time
+            case startDate
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            if container.contains(.isBreak){
+                self = .isBreak(times: try container.decode(Int.self, forKey: .times), time: try container.decode(Int.self, forKey: .time), startDate: try container.decode(Date.self, forKey: .startDate))
+            }else if container.contains(.isWorking){
+                 self = .isWorking(times: try container.decode(Int.self, forKey: .times), time: try container.decode(Int.self, forKey: .time), startDate: try container.decode(Date.self, forKey: .startDate))
+            }else{
+                self = .wait(times: (try? container.decode(Int.self, forKey: .times)) ?? 0 )
+            }
+        }
+        
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            switch self {
+            case .wait(let times ):
+                try container.encode(times, forKey: .times)
+                try container.encode(true, forKey: .wait)
+            case .isBreak(let times, let time, let startDate):
+                try container.encode(times, forKey: .times)
+                try container.encode(time, forKey: .time)
+                try container.encode(startDate, forKey: .startDate)
+                try container.encode(true, forKey: .isBreak)
+            case .isWorking(let times, let time, let startDate):
+                try container.encode(times, forKey: .times)
+                try container.encode(time, forKey: .time)
+                try container.encode(startDate, forKey: .startDate)
+                try container.encode(true, forKey: .isWorking)
+            }
+        }
+        
+        
         case wait(times: Int)
         case isBreak(times: Int, time: Int, startDate: Date)
         case isWorking(times: Int, time: Int, startDate: Date)
@@ -77,7 +118,7 @@ class Meditation : NSObject{
 
     var config = Config()
 
-    var state: State = .wait(times: 0) {
+    var state: State{
         didSet {
             switch state {
             case .isWorking, .isBreak:
@@ -86,6 +127,7 @@ class Meditation : NSObject{
                 self.stopTimer()
             }
             self.stateCallBack?(self.state)
+            Util.saveState(state: state)
         }
     }
 
@@ -95,10 +137,16 @@ class Meditation : NSObject{
         }
     }
 
+    let encoder = JSONEncoder()
+    
+    let decoder = JSONDecoder()
+    
     var timer: Timer?
 
     override init() {
+        self.state = Util.readState() ?? .wait(times: 0)
         super.init()
+        self.startTimer()
         NotificationCenter.default.addObserver(self, selector: #selector(selfCheck), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 

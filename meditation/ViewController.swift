@@ -133,17 +133,7 @@ class ViewController: UIViewController {
     }
     
     @objc func click() -> Void {
-        switch meditation.state {
-        case .isWorking:
-            self.meditation.quit()
-        case .isBreak:
-            self.startWork()
-            meditation.cancelBreak()
-            meditation.start()
-        case .wait:
-            self.startWork()
-            meditation.start()
-        }
+        self.meditation.trigger()
     }
     
     func startWork(){

@@ -8,11 +8,6 @@
 
 import UIKit
 import UserNotifications
- 
-private enum notificationId : String{
-    case workDone = "com.pipasese.meditation.workDone"
-    case breakOver = "com.pipasese.meditation.breakOver"
-}
 
 extension Int {
     var duration: String{
@@ -23,7 +18,35 @@ extension Int {
     }
 }
 
-class Meditation : NSObject{
+func MapMachine(state:Meditation.State,delegate:StateMachineDelegate) -> StateMachine {
+    switch state {
+    case .isBreak:
+        return BreakingState.init(state: state,delegate: delegate)
+    case .isWorking:
+        return WorkingState.init(state: state,delegate: delegate)
+    case .wait:
+        return WaitingState.init(state: state,delegate: delegate)
+    }
+}
+
+protocol StateMachineDelegate : NSObject {
+    var config:Config { get }
+}
+
+protocol StateMachine {
+    var delegate : StateMachineDelegate? { get set }
+    init(state:Meditation.State,delegate:StateMachineDelegate?)
+    var state : Meditation.State {get set}
+    func trigger()->Meditation.State
+}
+
+extension StateMachine{
+    func beginWork() {
+        Notification.shared.sendNotification(notification: "完成一个番茄钟，休息一下吧", interval: TimeInterval(self.delegate!.config.workTime), id: .workDone)
+    }
+}
+
+class Meditation : NSObject, StateMachineDelegate{
 
     enum State :Codable,Equatable {
         
@@ -104,6 +127,7 @@ class Meditation : NSObject{
                 return "开始吧！"
             }
         }
+        
     }
 
     static let shared = Meditation.init(config: Config())
@@ -122,23 +146,22 @@ class Meditation : NSObject{
             Util.saveInfo(info: self.state, t: .state)
         }
     }
+    
+    var stateMachine : StateMachine!
 
     var stateCallBack: ((State) -> Void)? {
         didSet {
             self.stateCallBack?(self.state)
         }
     }
-
-    let encoder = JSONEncoder()
-    
-    let decoder = JSONDecoder()
     
     var timer: Timer?
 
     init(config:Config) {
-        self.state = Util.readInfo(tp: .state) ?? .wait(times: 0)
         self.config = config
+        self.state = Util.readInfo(tp: .state) ?? .wait(times: 0)
         super.init()
+        self.stateMachine = MapMachine(state: self.state,delegate: self)
         self.startTimer()
         NotificationCenter.default.addObserver(self, selector: #selector(selfCheck), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
@@ -158,14 +181,10 @@ class Meditation : NSObject{
             break
         }
     }
-
-    func start() {
-        self.state = .isWorking(times: self.state.times+1, time: self.config.workTime, startDate: Date())
-        self.sendNotification(notification: "完成一个番茄钟，休息一下吧", interval: TimeInterval(self.config.workTime), id: .workDone)
-    }
     
-    func cancelBreak() {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationId.breakOver.rawValue])
+    func trigger() {
+        self.state = self.stateMachine.trigger()
+        self.stateMachine = MapMachine(state: self.state,delegate: self)
     }
     
     func startTimer() {
@@ -185,46 +204,7 @@ class Meditation : NSObject{
     func haveAbreak() {
         let time = self.state.times >= self.config.workPoint ? self.config.longBreakTime : self.config.breakTime
         self.state = .isBreak(times: self.state.times, time: time, startDate: Date())
-        self.sendNotification(notification: "已经休息\(time.duration)了，开始下一个番茄吧", interval: TimeInterval(time), id : .breakOver)
+        Notification.shared.sendNotification(notification: "已经休息\(time.duration)了，开始下一个番茄吧", interval: TimeInterval(time), id : .breakOver)
     }
 
-    func quit() {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationId.workDone.rawValue])
-        self.state = .wait(times: self.state.times)
-    }
-
-    private func sendNotification(notification: String, interval: TimeInterval,id: notificationId) {
-        var options = UNAuthorizationOptions.init(arrayLiteral: .alert, .sound)
-        if #available(iOS 13.0, *) {
-            options.insert(.announcement)
-        }
-        UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: options) { (flag, error) in
-            guard flag else {
-                return
-            }
-            let content = UNMutableNotificationContent.init()
-            content.body = notification
-            content.sound = .default
-            let request = UNNotificationRequest.init(identifier: id.rawValue, content: content, trigger:
-            UNTimeIntervalNotificationTrigger.init(timeInterval: interval, repeats: false))
-            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (_) in
-            })
-        }
-    }
-}
-
-extension Meditation : UNUserNotificationCenterDelegate{
-    func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
-        
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        completionHandler()
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler(.init(arrayLiteral: .alert,.sound))
-    }
-    
 }

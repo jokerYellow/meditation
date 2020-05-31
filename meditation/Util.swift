@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+ 
 enum StoreType:String{
     case state = "state"
     case config = "config"
@@ -45,5 +45,6 @@ class Util {
         }catch{}
         return nil
    }
+    
     
 }

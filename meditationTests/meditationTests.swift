@@ -20,8 +20,17 @@ class meditationTests: XCTestCase {
     }
 
     func testDataSave() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let config = Config()
+        Util.saveInfo(info: config, t: .config)
+        let n :Config? = Util.readInfo(tp: .config)
+        XCTAssertNotNil(n)
+        XCTAssertEqual(n!, config)
+        
+        let state = Meditation.State.wait(times: 1)
+        Util.saveInfo(info: state, t: .state)
+        let ns :Meditation.State? = Util.readInfo(tp: .state)
+        XCTAssertNotNil(ns)
+        XCTAssertEqual(ns!, state)
     }
 
     func testPerformanceExample() {

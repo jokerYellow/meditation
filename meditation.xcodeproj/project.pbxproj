@@ -13,6 +13,7 @@
 		BF7AC323248293550060F38C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7AC322248293550060F38C /* Util.swift */; };
 		BF85D331247E67860064E805 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF85D330247E67860064E805 /* SettingViewController.swift */; };
 		BF85D333247E6DE00064E805 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF85D332247E6DE00064E805 /* Meditation.swift */; };
+		BFBC61E8248395A700903F4F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBC61E7248395A700903F4F /* Config.swift */; };
 		BFE28F3922F7A9CB005C979E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE28F3822F7A9CB005C979E /* AppDelegate.swift */; };
 		BFE28F3B22F7A9CB005C979E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE28F3A22F7A9CB005C979E /* ViewController.swift */; };
 		BFE28F3E22F7A9CB005C979E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFE28F3C22F7A9CB005C979E /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		BF85D330247E67860064E805 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		BF85D332247E6DE00064E805 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
 		BF85D334247E70490064E805 /* meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = meditation.entitlements; sourceTree = "<group>"; };
+		BFBC61E7248395A700903F4F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		BFE28F3522F7A9CB005C979E /* meditation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meditation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFE28F3822F7A9CB005C979E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFE28F3A22F7A9CB005C979E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				BFE28F3822F7A9CB005C979E /* AppDelegate.swift */,
 				BFE28F3A22F7A9CB005C979E /* ViewController.swift */,
 				BF85D332247E6DE00064E805 /* Meditation.swift */,
+				BFBC61E7248395A700903F4F /* Config.swift */,
 				BF7AC322248293550060F38C /* Util.swift */,
 				BF85D330247E67860064E805 /* SettingViewController.swift */,
 				BFE28F3C22F7A9CB005C979E /* Main.storyboard */,
@@ -354,6 +357,7 @@
 				BF85D333247E6DE00064E805 /* Meditation.swift in Sources */,
 				BF7AC323248293550060F38C /* Util.swift in Sources */,
 				BFE28F3B22F7A9CB005C979E /* ViewController.swift in Sources */,
+				BFBC61E8248395A700903F4F /* Config.swift in Sources */,
 				BFE28F3922F7A9CB005C979E /* AppDelegate.swift in Sources */,
 				BF5445F822F8732A003F7A30 /* R.generated.swift in Sources */,
 				BF85D331247E67860064E805 /* SettingViewController.swift in Sources */,

@@ -25,7 +25,7 @@ extension Int {
 
 class Meditation : NSObject{
 
-    enum State :Codable {
+    enum State :Codable,Equatable {
         
         enum CodingKeys:CodingKey {
             case wait
@@ -106,17 +106,9 @@ class Meditation : NSObject{
         }
     }
 
-    struct Config {
-        //seconds
-        var workTime: Int = 10
-        var breakTime: Int = 3
-        var longBreakTime: Int = 6
-        var workPoint: Int = 2
-    }
+    static let shared = Meditation.init(config: Config())
 
-    static let shared = Meditation()
-
-    var config = Config()
+    var config : Config
 
     var state: State{
         didSet {
@@ -127,7 +119,7 @@ class Meditation : NSObject{
                 self.stopTimer()
             }
             self.stateCallBack?(self.state)
-            Util.saveState(state: state)
+            Util.saveInfo(info: self.state, t: .state)
         }
     }
 
@@ -143,8 +135,9 @@ class Meditation : NSObject{
     
     var timer: Timer?
 
-    override init() {
-        self.state = Util.readState() ?? .wait(times: 0)
+    init(config:Config) {
+        self.state = Util.readInfo(tp: .state) ?? .wait(times: 0)
+        self.config = config
         super.init()
         self.startTimer()
         NotificationCenter.default.addObserver(self, selector: #selector(selfCheck), name: UIApplication.didBecomeActiveNotification, object: nil)

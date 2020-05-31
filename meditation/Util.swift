@@ -8,29 +8,42 @@
 
 import Foundation
 
-class Util {
-    static var url : URL {
+enum StoreType:String{
+    case state = "state"
+    case config = "config"
+    
+    static var storedDirectory : URL {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        return URL.init(fileURLWithPath: "\(path)/state")
+        return URL.init(fileURLWithPath: "\(path)/stored")
     }
     
-    static func saveState(state:Meditation.State){
-        do{
-            let data = try JSONEncoder().encode(state)
-            try data.write(to: self.url)
+    var storedUrl : URL {
+        var d = StoreType.storedDirectory
+        if !FileManager.default.fileExists(atPath: d.absoluteString) {
+            try? FileManager.default.createDirectory(at: d, withIntermediateDirectories: true, attributes: nil)
         }
-        catch{
-            
-        }
+        d.appendPathComponent(self.rawValue)
+        return d
     }
+}
+
+class Util {
     
-    static func readState()->Meditation.State?{
+    static func saveInfo<T:Codable>(info:T,t:StoreType){
         do{
-            let data = try Data.init(contentsOf: Util.url)
-            let state = try JSONDecoder().decode(Meditation.State.self, from: data)
-            return state
-        }catch{
-            return nil
+            let data = try JSONEncoder().encode(info)
+            try data.write(to: t.storedUrl,options: .atomic)
         }
+        catch{}
     }
+       
+    static func readInfo<T:Codable>(tp:StoreType)->T?{
+        do{
+            let data = try Data.init(contentsOf: tp.storedUrl)
+            let info = try JSONDecoder().decode(T.self, from: data)
+            return info
+        }catch{}
+        return nil
+   }
+    
 }

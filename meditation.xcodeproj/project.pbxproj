@@ -40,8 +40,8 @@
 		BF7AC322248293550060F38C /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		BF85D330247E67860064E805 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		BF85D332247E6DE00064E805 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
-		BF85D334247E70490064E805 /* 木鱼.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "木鱼.entitlements"; sourceTree = "<group>"; };
-		BFE28F3522F7A9CB005C979E /* 木鱼.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "木鱼.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF85D334247E70490064E805 /* meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = meditation.entitlements; sourceTree = "<group>"; };
+		BFE28F3522F7A9CB005C979E /* meditation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meditation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFE28F3822F7A9CB005C979E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFE28F3A22F7A9CB005C979E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BFE28F3D22F7A9CB005C979E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 		BFE28F3622F7A9CB005C979E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BFE28F3522F7A9CB005C979E /* 木鱼.app */,
+				BFE28F3522F7A9CB005C979E /* meditation.app */,
 				BFE28F4922F7A9CC005C979E /* meditationTests.xctest */,
 			);
 			name = Products;
@@ -98,7 +98,7 @@
 		BFE28F3722F7A9CB005C979E /* meditation */ = {
 			isa = PBXGroup;
 			children = (
-				BF85D334247E70490064E805 /* 木鱼.entitlements */,
+				BF85D334247E70490064E805 /* meditation.entitlements */,
 				BF5445F722F8732A003F7A30 /* R.generated.swift */,
 				BFE28F3822F7A9CB005C979E /* AppDelegate.swift */,
 				BFE28F3A22F7A9CB005C979E /* ViewController.swift */,
@@ -163,7 +163,7 @@
 			);
 			name = meditation;
 			productName = meditation;
-			productReference = BFE28F3522F7A9CB005C979E /* 木鱼.app */;
+			productReference = BFE28F3522F7A9CB005C979E /* meditation.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BFE28F4822F7A9CC005C979E /* meditationTests */ = {
@@ -519,7 +519,7 @@
 			baseConfigurationReference = CE05D87B2C657C4254D7E620 /* Pods-meditation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "meditation/木鱼.entitlements";
+				CODE_SIGN_ENTITLEMENTS = meditation/meditation.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4USFLE6SEH;
 				INFOPLIST_FILE = meditation/Info.plist;
@@ -529,7 +529,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pipasese.meditation;
-				PRODUCT_NAME = "木鱼";
+				PRODUCT_NAME = meditation;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -540,7 +540,7 @@
 			baseConfigurationReference = EB627970BABC0EBF20DAA1EF /* Pods-meditation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "meditation/木鱼.entitlements";
+				CODE_SIGN_ENTITLEMENTS = meditation/meditation.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4USFLE6SEH;
 				INFOPLIST_FILE = meditation/Info.plist;
@@ -550,7 +550,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pipasese.meditation;
-				PRODUCT_NAME = "木鱼";
+				PRODUCT_NAME = meditation;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

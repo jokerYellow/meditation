@@ -74,7 +74,15 @@ class Meditation : NSObject, StateMachineDelegate{
                 return times;
             }
         }
-
+        var time: Int {
+            switch self {
+            case .wait:
+                return 0
+            case .isBreak(_, let time, _), .isWorking(_, let time, _):
+                return time;
+            }
+        }
+        
         var title: String {
             switch self {
             case .wait:
@@ -97,6 +105,15 @@ class Meditation : NSObject, StateMachineDelegate{
                 return String.init(format: "%02d:%02d", last / 60, last % 60)
             default:
                 return "开始吧！"
+            }
+        }
+        
+        var isOver : Bool{
+            switch self {
+            case .wait:
+                return false
+            case .isBreak(_, let time, let startDate), .isWorking(_, let time, let startDate):
+                return startDate.addingTimeInterval(TimeInterval(time+1)).compare(Date()) == .orderedAscending
             }
         }
         

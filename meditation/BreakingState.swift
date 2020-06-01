@@ -27,10 +27,10 @@ class BreakingState : StateMachine {
     }
     
     func selfCheck() -> Meditation.State? {
-        guard case .isBreak(let times, let time, let startDate)  = self.state else {
+        guard case .isBreak(let times, _, _)  = self.state else {
             return nil
         }
-        if startDate.addingTimeInterval(TimeInterval(time)).compare(Date()) == .orderedAscending {
+        if self.state.isOver{
             return .wait(times: times)
         }
         return nil

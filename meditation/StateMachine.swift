@@ -37,7 +37,13 @@ protocol StateMachine {
 }
 
 extension StateMachine{
+    
     func beginWork() {
         Notification.shared.sendNotification(notification: "完成一个番茄钟，休息一下吧", interval: TimeInterval(self.delegate!.config.workTime), id: .workDone)
+    }
+    
+    func beginBreak(){
+        let time = self.state.times >= self.delegate!.config.workPoint ? self.delegate!.config.longBreakTime : self.delegate!.config.breakTime
+        Notification.shared.sendNotification(notification: "已经休息\(time.duration)了，开始下一个番茄吧", interval: TimeInterval(time), id : .breakOver)
     }
 }

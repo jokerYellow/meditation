@@ -56,14 +56,14 @@ class ViewController: UIViewController {
     let animation : CAShapeLayer = CAShapeLayer()
     
     let animationView = UIView()
-    
-    var start = false
-    
+     
     let settingButton = UIButton.init()
     
     let timerLabel = UILabel()
     
     let meditation = Meditation.shared
+    
+    var state: Meditation.State!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,38 +120,36 @@ class ViewController: UIViewController {
         switch state {
         case .wait:
             self.timerLabel.font = UIFont.boldSystemFont(ofSize: 20)
-            if self.start {
+            if self.state != state{
                 self.stopWork()
             }
-            self.start = false
         case .isWorking:
-            self.start = true
             self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
+            if self.state != state{
+                self.beginAnimation()
+            }
         case .isBreak:
-            self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
+            self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold) 
         }
+        self.state = state
     }
     
     @objc func click() -> Void {
         self.meditation.trigger()
     }
     
-    func startWork(){
-        self.beginAnimation()
-    }
-    
     func stopWork(){
         self.button.isEnabled = false
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.1, animations: {
             self.animationView.alpha = 0
             self.animation.shadowOpacity = 0
         }) { (_) in
             
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.animation.removeAllAnimations()
             self.refreshState(state: self.meditation.state)
-            UIView.animate(withDuration: 0.25, delay: 1, options: .allowAnimatedContent, animations: {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .allowAnimatedContent, animations: {
                 self.animationView.alpha = 1
             }, completion: { (_) in
                 self.button.isEnabled = true

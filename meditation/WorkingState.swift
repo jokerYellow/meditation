@@ -27,15 +27,15 @@ class WorkingState : StateMachine {
         guard case .isWorking(let times, let time, let startDate) = self.state else {
             return nil
         }
-        if startDate.addingTimeInterval(TimeInterval(time)).compare(Date()) == .orderedAscending {
+        if self.state.isOver{
             return self.haveAbreak()
         }
         return nil
     }
     
     func haveAbreak()->Meditation.State {
+        self.beginBreak()
         let time = self.state.times >= self.delegate!.config.workPoint ? self.delegate!.config.longBreakTime : self.delegate!.config.breakTime
-        Notification.shared.sendNotification(notification: "已经休息\(time.duration)了，开始下一个番茄吧", interval: TimeInterval(time), id : .breakOver)
         return .isBreak(times: self.state.times, time: time, startDate: Date())
     }
 

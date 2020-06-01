@@ -14,4 +14,5 @@ struct Config : Codable,Equatable {
     var breakTime: Int = 3
     var longBreakTime: Int = 6
     var workPoint: Int = 2
+    
 }

@@ -18,34 +18,6 @@ extension Int {
     }
 }
 
-func MapMachine(state:Meditation.State,delegate:StateMachineDelegate) -> StateMachine {
-    switch state {
-    case .isBreak:
-        return BreakingState.init(state: state,delegate: delegate)
-    case .isWorking:
-        return WorkingState.init(state: state,delegate: delegate)
-    case .wait:
-        return WaitingState.init(state: state,delegate: delegate)
-    }
-}
-
-protocol StateMachineDelegate : NSObject {
-    var config:Config { get }
-}
-
-protocol StateMachine {
-    var delegate : StateMachineDelegate? { get set }
-    init(state:Meditation.State,delegate:StateMachineDelegate?)
-    var state : Meditation.State {get set}
-    func trigger()->Meditation.State
-}
-
-extension StateMachine{
-    func beginWork() {
-        Notification.shared.sendNotification(notification: "完成一个番茄钟，休息一下吧", interval: TimeInterval(self.delegate!.config.workTime), id: .workDone)
-    }
-}
-
 class Meditation : NSObject, StateMachineDelegate{
 
     enum State :Codable,Equatable {
@@ -167,19 +139,11 @@ class Meditation : NSObject, StateMachineDelegate{
     }
 
     @objc func selfCheck() -> Void {
-        switch self.state {
-        case .wait:
-            break
-        case .isBreak(let times, let time, let startDate):
-            if startDate.addingTimeInterval(TimeInterval(time)).compare(Date()) == .orderedAscending {
-                self.state = .wait(times: times)
-            }
-        case .isWorking(_, let time, let startDate):
-            if startDate.addingTimeInterval(TimeInterval(time)).compare(Date()) == .orderedAscending {
-                self.haveAbreak()
-            }
-            break
+        guard let state = self.stateMachine.selfCheck() else{
+            return
         }
+        self.state = state
+        self.stateMachine = MapMachine(state: state, delegate: self)
     }
     
     func trigger() {
@@ -199,12 +163,6 @@ class Meditation : NSObject, StateMachineDelegate{
     func stopTimer() {
         self.timer?.invalidate()
         self.timer = nil
-    }
-
-    func haveAbreak() {
-        let time = self.state.times >= self.config.workPoint ? self.config.longBreakTime : self.config.breakTime
-        self.state = .isBreak(times: self.state.times, time: time, startDate: Date())
-        Notification.shared.sendNotification(notification: "已经休息\(time.duration)了，开始下一个番茄吧", interval: TimeInterval(time), id : .breakOver)
     }
 
 }

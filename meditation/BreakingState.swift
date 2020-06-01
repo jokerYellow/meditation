@@ -18,6 +18,7 @@ class BreakingState : StateMachine {
         self.state = state
         self.delegate = delegate
     }
+    
     //停止休息，开始工作
     func trigger() -> Meditation.State {
         Notification.shared.cancel(type: .breakOver)
@@ -25,4 +26,13 @@ class BreakingState : StateMachine {
         return .isWorking(times: self.state.times+1, time: self.delegate!.config.workTime, startDate: Date())
     }
     
+    func selfCheck() -> Meditation.State? {
+        guard case .isBreak(let times, let time, let startDate)  = self.state else {
+            return nil
+        }
+        if startDate.addingTimeInterval(TimeInterval(time)).compare(Date()) == .orderedAscending {
+            return .wait(times: times)
+        }
+        return nil
+    }
 }

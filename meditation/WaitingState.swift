@@ -10,17 +10,23 @@ import Foundation
 
 
 class WaitingState : StateMachine {
+    
     weak var delegate: StateMachineDelegate?
+    
+    var state: Meditation.State
     
     required init(state: Meditation.State,delegate:StateMachineDelegate?) {
           self.state = state
           self.delegate = delegate
       }
     
-    var state: Meditation.State
     //开始工作
     func trigger() -> Meditation.State {
         self.beginWork()
         return .isWorking(times: self.state.times+1, time: self.delegate!.config.workTime, startDate: Date())
+    }
+    
+    func selfCheck() -> Meditation.State? {
+        return nil
     }
 }

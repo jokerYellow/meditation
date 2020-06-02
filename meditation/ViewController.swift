@@ -65,6 +65,8 @@ class ViewController: UIViewController {
     
     var state: Meditation.State!
     
+    var isStoping = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(self.backImage)
@@ -114,15 +116,19 @@ class ViewController: UIViewController {
     }
     
     func refreshState(state:Meditation.State){
-        self.button.setTitle(state.title, for: .normal)
-        self.timerLabel.text = state.lastTime
-        self.timerLabel.textColor = UIColor.white
+        defer {
+            self.state = state
+        }
+        if isStoping {
+            return
+        }
         switch state {
         case .wait:
-            self.timerLabel.font = UIFont.boldSystemFont(ofSize: 20)
-            if self.state != state{
+            if let s = self.state, s != state{
                 self.stopWork()
+                return
             }
+            self.timerLabel.font = UIFont.boldSystemFont(ofSize: 20)
         case .isWorking:
             self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
             if self.state != state{
@@ -131,7 +137,9 @@ class ViewController: UIViewController {
         case .isBreak:
             self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
         }
-        self.state = state
+        self.button.setTitle(state.title, for: .normal)
+        self.timerLabel.text = state.lastTime
+        self.timerLabel.textColor = UIColor.white
     }
     
     @objc func click() -> Void {
@@ -140,16 +148,19 @@ class ViewController: UIViewController {
     
     func stopWork(){
         self.button.isEnabled = false
-        UIView.animate(withDuration: 0.1, animations: {
+        self.isStoping = true
+        let duration : TimeInterval = 0.25
+        UIView.animate(withDuration: duration, animations: {
             self.animationView.alpha = 0
             self.animation.shadowOpacity = 0
         }) { (_) in
             
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
             self.animation.removeAllAnimations()
+            self.isStoping = false
             self.refreshState(state: self.meditation.state)
-            UIView.animate(withDuration: 0.25, delay: 0, options: .allowAnimatedContent, animations: {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
                 self.animationView.alpha = 1
             }, completion: { (_) in
                 self.button.isEnabled = true

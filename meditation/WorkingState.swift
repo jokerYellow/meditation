@@ -22,8 +22,8 @@ class WorkingState : StateMachine {
     func trigger() -> Meditation.State {
         Notification.shared.cancel(type: .workDone)
         Notification.shared.cancel(type: .breakOver)
-        print("work interupt，times:\(self.state.times)")
-        return .wait(times: self.state.times)
+        print("work interupt，times:\(self.state.times)，reset times")
+        return .wait(times: 0)
     }
     
     func selfCheck() -> Meditation.State? {

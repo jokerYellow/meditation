@@ -22,7 +22,8 @@ class BreakingState : StateMachine {
     //停止休息，开始工作
     func trigger() -> Meditation.State {
         Notification.shared.cancel(type: .breakOver)
-        self.beginWork()
+        self.beginWork(workTime: self.delegate!.config.workTime, breakTime: self.nextBreakTime)
+        print("begin work，times:\(self.state.times + 1),time:\(self.delegate!.config.workTime)")
         return .isWorking(times: self.state.times+1, time: self.delegate!.config.workTime, startDate: Date())
     }
     

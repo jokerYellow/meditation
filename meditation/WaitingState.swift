@@ -20,9 +20,10 @@ class WaitingState : StateMachine {
           self.delegate = delegate
       }
     
-    //开始工作
+    ////停止等待状态，开始工作
     func trigger() -> Meditation.State {
-        self.beginWork()
+        self.beginWork(workTime: self.delegate!.config.workTime, breakTime: self.nextBreakTime)
+        print("begin work，times:\(self.state.times + 1),time:\(self.delegate!.config.workTime)")
         return .isWorking(times: self.state.times+1, time: self.delegate!.config.workTime, startDate: Date())
     }
     

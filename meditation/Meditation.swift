@@ -48,6 +48,7 @@ class Meditation : NSObject, StateMachineDelegate{
             case .wait(let times ):
                 try container.encode(times, forKey: .times)
                 try container.encode(true, forKey: .wait)
+                try container.encode(0, forKey: .times)
             case .isBreak(let times, let time, let startDate):
                 try container.encode(times, forKey: .times)
                 try container.encode(time, forKey: .time)
@@ -113,7 +114,7 @@ class Meditation : NSObject, StateMachineDelegate{
             case .wait:
                 return false
             case .isBreak(_, let time, let startDate), .isWorking(_, let time, let startDate):
-                return startDate.addingTimeInterval(TimeInterval(time+1)).compare(Date()) == .orderedAscending
+                return startDate.addingTimeInterval(TimeInterval(time)).compare(Date()) == .orderedAscending
             }
         }
         

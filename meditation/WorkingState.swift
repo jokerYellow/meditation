@@ -18,8 +18,11 @@ class WorkingState : StateMachine {
     
     var state: Meditation.State
     
+    //停止工作状态
     func trigger() -> Meditation.State {
         Notification.shared.cancel(type: .workDone)
+        Notification.shared.cancel(type: .breakOver)
+        print("work interupt，times:\(self.state.times)")
         return .wait(times: self.state.times)
     }
     
@@ -28,15 +31,16 @@ class WorkingState : StateMachine {
             return nil
         }
         if self.state.isOver{
-            return self.haveAbreak()
+            return self.haveAbreak(startData: startDate.addingTimeInterval(TimeInterval(time)))
         }
         return nil
     }
     
-    func haveAbreak()->Meditation.State {
-        self.beginBreak()
-        let time = self.state.times >= self.delegate!.config.workPoint ? self.delegate!.config.longBreakTime : self.delegate!.config.breakTime
-        return .isBreak(times: self.state.times, time: time, startDate: Date())
+    func haveAbreak(startData:Date)->Meditation.State {
+        let isLongBreak = self.state.times >= self.delegate!.config.workPoint
+        let time = isLongBreak ? self.delegate!.config.longBreakTime : self.delegate!.config.breakTime
+        print("isLongBreak:\(isLongBreak),break duration:\(time.duration)")
+        return .isBreak(times: isLongBreak ? 0 : self.state.times, time: time, startDate: startData)
     }
 
 }

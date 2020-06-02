@@ -18,12 +18,22 @@ class Notification : NSObject, UNUserNotificationCenterDelegate {
     
     static let shared = Notification()
     
+    override init() {
+        super.init()
+        UNUserNotificationCenter.current().delegate = self
+    }
+    
+    func clearNotifications() {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+    }
+    
     func sendNotification(notification: String, interval: TimeInterval,id: notificationId) {
         var options = UNAuthorizationOptions.init(arrayLiteral: .alert, .sound)
         if #available(iOS 13.0, *) {
             options.insert(.announcement)
         }
-        UNUserNotificationCenter.current().delegate = self
+        
         UNUserNotificationCenter.current().requestAuthorization(options: options) { (flag, error) in
             guard flag else {
                 return
@@ -31,9 +41,15 @@ class Notification : NSObject, UNUserNotificationCenterDelegate {
             let content = UNMutableNotificationContent.init()
             content.body = notification
             content.sound = .default
-            let request = UNNotificationRequest.init(identifier: id.rawValue, content: content, trigger:
-            UNTimeIntervalNotificationTrigger.init(timeInterval: interval, repeats: false))
-            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (_) in
+            let request = UNNotificationRequest.init(identifier: id.rawValue,
+                                                     content: content,
+                                                     trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: interval, repeats: false))
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+                if let error = error {
+                    print("add notification failed:\(String(describing: error))")
+                }else{
+                    print("add notification \(id) ,\(notification),in \(interval) seconds")
+                }
             })
         }
     }

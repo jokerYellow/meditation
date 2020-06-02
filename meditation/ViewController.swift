@@ -129,7 +129,7 @@ class ViewController: UIViewController {
                 self.beginAnimation()
             }
         case .isBreak:
-            self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold) 
+            self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
         }
         self.state = state
     }

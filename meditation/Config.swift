@@ -11,9 +11,9 @@ import Foundation
 struct Config : Codable,Equatable {
     //seconds
     var workTime: Int = 1500
-    var breakTime: Int = 3
-    var longBreakTime: Int = 6
-    var workPoint: Int = 2
+    var breakTime: Int = 300
+    var longBreakTime: Int = 900
+    var workPoint: Int = 4
     
 }
 

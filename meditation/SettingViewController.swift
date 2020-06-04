@@ -28,7 +28,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
     lazy var sources : [SettingItemGroup] = {
         let workTimes = [5,8,10,15,20,25,30,35,40]
         let breakTimes = [1,2,3,5,8,10]
-        let points = [1,2,3,5,8,10]
+        let points = [1,2,3,4,5,6,7,8,9,10]
         return [
                 SettingItemGroup.init(title: "番茄钟",
                                       items: [
@@ -74,24 +74,28 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                         SettingItem.init(
                                             title: "循环次数",
                                             value: {[unowned self] in
-                                                return "\(self.config.workPoint.minutes) 次"},
+                                                return "\(self.config.workPoint) 次"},
                                            trigger: { [unowned self] in
                                                let picker :Picker = PickerView()
-                                               picker.show(title: "循环次数", items: points.map{"\($0)"}, dw: "次",defaultIndex: points.firstIndex(of: self.config.workPoint.minutes) ?? 0) { (index) in
-                                               self.config.workPoint = points[index].seconds
+                                               picker.show(title: "循环次数", items: points.map{"\($0)"}, dw: "次",defaultIndex: points.firstIndex(of: self.config.workPoint) ?? 0) { (index) in
+                                               self.config.workPoint = points[index]
                                                Util.saveInfo(info: self.config, t: .config)
                                                self.tableView.reloadData()
                                             }})
                                             ]),
-                SettingItemGroup.init(title: "主题",
-                items: [SettingItem.init(title: "工作结束提醒音"),
-                        SettingItem.init(title: "休息结束提醒音"),
-                        SettingItem.init(title: "背景图片切换"),
-                        SettingItem.init(title: "背景音乐切换"),
-                        SettingItem.init(title: "动画切换")]),
+//                SettingItemGroup.init(title: "主题",
+//                items: [SettingItem.init(title: "工作结束提醒音"),
+//                        SettingItem.init(title: "休息结束提醒音"),
+//                        SettingItem.init(title: "背景图片切换"),
+//                        SettingItem.init(title: "背景音乐切换"),
+//                        SettingItem.init(title: "动画切换")]),
                 SettingItemGroup.init(title: "其他",
-                items: [SettingItem.init(title: "关于我们"),
-                        SettingItem.init(title: "版本号",accessoryType: .none)]),
+                items: [
+//                    SettingItem.init(title: "关于我们"),
+                    SettingItem.init(title: "版本号",accessoryType: .none,value: {
+
+                        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+                    })]),
         ]
     }()
     

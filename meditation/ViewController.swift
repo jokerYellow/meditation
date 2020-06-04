@@ -98,7 +98,7 @@ class ViewController: UIViewController {
         self.button.addTarget(self, action: #selector(click), for: .touchUpInside)
         
         self.settingButton.setImage(R.image.setting(), for: .normal)
-        
+        self.settingButton.addTarget(self, action: #selector(gotoSetting), for: .touchUpInside)
         self.view.addSubview(self.settingButton)
         self.settingButton.snp.makeConstraints { (make) in
             make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).offset(-10)
@@ -113,6 +113,10 @@ class ViewController: UIViewController {
             make.center.equalTo(self.animationView)
         } 
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func gotoSetting() {
+        self.present(UINavigationController.init(rootViewController: SettingViewController()), animated: true, completion: nil)
     }
     
     func refreshState(state:Meditation.State){

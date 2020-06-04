@@ -120,7 +120,10 @@ class Meditation : NSObject, StateMachineDelegate{
         
     }
 
-    static let shared = Meditation.init(config: Config())
+    static let shared = Meditation.init(config:{
+        let config :Config? = Util.readInfo(tp: .config)
+        return config ?? Config()
+    }())
 
     var config : Config
 

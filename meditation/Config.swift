@@ -10,9 +10,22 @@ import Foundation
 
 struct Config : Codable,Equatable {
     //seconds
-    var workTime: Int = 10
+    var workTime: Int = 1500
     var breakTime: Int = 3
     var longBreakTime: Int = 6
     var workPoint: Int = 2
     
+}
+
+extension Int {
+
+    ///    seconds to minutes
+    var minutes : Int {
+        return self/60
+    }
+    
+    ///    minutes to seconds
+    var seconds : Int {
+           return self*60
+    }
 }

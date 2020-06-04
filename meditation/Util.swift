@@ -7,7 +7,8 @@
 //
 
 import Foundation
- 
+import UIKit
+
 enum StoreType:String{
     case state = "state"
     case config = "config"
@@ -34,7 +35,9 @@ class Util {
             let data = try JSONEncoder().encode(info)
             try data.write(to: t.storedUrl,options: .atomic)
         }
-        catch{}
+        catch{
+            print(error)
+        }
     }
        
     static func readInfo<T:Codable>(tp:StoreType)->T?{
@@ -47,4 +50,22 @@ class Util {
    }
     
     
+}
+
+extension UIColor {
+    var image :UIImage {
+        let size = CGSize.init(width: 1, height: 1)
+        let rect = CGRect.init(origin: .zero, size: size)
+        UIGraphicsBeginImageContext( size )
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return UIImage ()
+        }
+        context.addRect(rect)
+        context.setFillColor(self.cgColor)
+        context.fill(rect)
+        guard let image = UIGraphicsGetImageFromCurrentImageContext()else{
+            return UIImage()
+        }
+        return image
+    }
 }

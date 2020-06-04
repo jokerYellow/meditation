@@ -38,4 +38,16 @@ platform :ios do
 
     # add actions here: https://docs.fastlane.tools/actions
   end
+
+  lane :upappstore do 
+    increment_build_number
+    build_app(scheme: "meditation",
+      workspace: "meditation.xcworkspace",
+      export_method: "app-store",
+      output_directory: "build",
+      include_bitcode: true,
+      xcargs: "-allowProvisioningUpdates"
+    )
+    upload_to_app_store(username:"592679546@qq.com")
+  end
 end

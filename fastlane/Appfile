@@ -5,3 +5,6 @@
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
 
+apple_id "592679546@qq.com"
+app_identifier "com.pipasese.meditation"
+itc_team_name "Yaqing Huang"

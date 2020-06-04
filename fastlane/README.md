@@ -26,6 +26,11 @@ Description of what the lane does
 fastlane ios beta
 ```
 
+### ios upappstore
+```
+fastlane ios upappstore
+```
+
 
 ----
 

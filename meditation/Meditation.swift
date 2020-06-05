@@ -155,6 +155,7 @@ class Meditation : NSObject, StateMachineDelegate{
         self.state = Util.readInfo(tp: .state) ?? .wait(times: 0)
         super.init()
         self.stateMachine = MapMachine(state: self.state,delegate: self)
+        self.selfCheck()
         self.startTimer()
         NotificationCenter.default.addObserver(self, selector: #selector(selfCheck), name: UIApplication.didBecomeActiveNotification, object: nil)
     }

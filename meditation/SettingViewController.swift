@@ -91,10 +91,18 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
 //                        SettingItem.init(title: "动画切换")]),
                 SettingItemGroup.init(title: "其他",
                 items: [
-//                    SettingItem.init(title: "关于我们"),
-                    SettingItem.init(title: "版本号",accessoryType: .none,value: {
-
-                        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+                    SettingItem.init(title: "微博",
+                                     trigger: {
+                                        UIApplication.shared.open(URL.init(string: "https://weibo.com/u/2178539252")!, options:[UIApplication.OpenExternalURLOptionsKey : Any](), completionHandler: nil)
+                    }),
+                    SettingItem.init(title: "分享给其他小伙伴",
+                                     trigger: {[unowned self] in
+                                        self.share()
+                    }),
+                    SettingItem.init(title: "版本号",
+                                     accessoryType: .none,
+                                     value: {
+                                        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
                     })]),
         ]
     }()
@@ -146,6 +154,10 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
         sources[indexPath.section].items[indexPath.row].trigger?()
     }
      
+    func share() {
+        let activity = UIActivityViewController.init(activityItems: [appUrl], applicationActivities: [UIActivity.init()])
+        self.present(activity , animated: true, completion: nil)
+    }
     
     /*
     // MARK: - Navigation

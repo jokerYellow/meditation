@@ -133,13 +133,11 @@ class ViewController: UIViewController {
                 return
             }
             self.timerLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        case .isWorking:
+        case .isWorking, .isBreak:
             self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
             if self.state != state{
                 self.beginAnimation()
             }
-        case .isBreak:
-            self.timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .bold)
         }
         self.button.setTitle(state.title, for: .normal)
         self.timerLabel.text = state.lastTime
@@ -173,6 +171,9 @@ class ViewController: UIViewController {
     }
 
     func beginAnimation()  {
+        if self.animation.animationKeys() != nil {
+            return
+        }
         let key = CAKeyframeAnimation()
         key.keyPath = "path"
         key.duration = 30

@@ -21,19 +21,27 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
         btn.setTitle("保存", for: .normal)
         btn.layer.cornerRadius = 5
         btn.layer.masksToBounds = true
-        btn.setTitleColor(UIColor.black, for: .normal)
-        btn.setBackgroundImage(UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1).image, for: .normal)
         btn.addTarget(self, action: #selector(callBack), for: .touchUpInside)
         return btn
     }()
     
     let titleLabel : UILabel = {
         let label = UILabel()
+        if #available(iOS 13.0, *) {
+            label.textColor = .label
+        } else {
+            label.textColor = .white
+        }
         return label
     }()
     
     let dwLabel : UILabel = {
         let label = UILabel()
+        if #available(iOS 13.0, *) {
+            label.textColor = .label
+        } else {
+            label.textColor = .white
+        }
         return label
     }()
     
@@ -47,7 +55,13 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
         self.addSubview(self.dwLabel)
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 20
-        self.backgroundColor = self.picker.backgroundColor
+        if #available(iOS 13.0, *) {
+            self.backgroundColor =  UIColor.init(dynamicProvider: { (trait) -> UIColor in
+                return (trait.userInterfaceStyle == .dark) ? UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 1): UIColor.white
+            })
+        } else {
+            self.backgroundColor =  self.picker.backgroundColor
+        }
         self.layer.maskedCorners = .init(arrayLiteral: .layerMinXMinYCorner,.layerMaxXMinYCorner)
         
         self.saveButton.snp.makeConstraints { (make) in
@@ -71,6 +85,7 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
             make.centerX.equalTo(self).offset(40)
             make.centerY.equalTo(self.picker)
         }
+        self.updateTrait()
     }
     
     required init?(coder: NSCoder) {
@@ -89,7 +104,11 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
         let picker = UIPickerView.init()
         picker.dataSource = self
         picker.delegate = self
-        picker.backgroundColor = UIColor.white
+        if #available(iOS 13.0, *) {
+            picker.backgroundColor = UIColor.clear
+        } else {
+            picker.backgroundColor = UIColor.clear
+        }
         return picker
     }()
     
@@ -125,6 +144,22 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateTrait()
+    }
+    
+    func updateTrait(){
+        if #available(iOS 13.0, *) {
+            self.saveButton.setTitleColor(UIColor.label, for: .normal)
+            let color = (self.traitCollection.userInterfaceStyle == .dark) ? UIColor.init(red: 0.4, green: 0.4, blue: 0.4, alpha: 1) : UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+            self.saveButton.setBackgroundImage( color.image, for: .normal)
+        } else {
+            self.saveButton.setTitleColor(UIColor.black, for: .normal)
+            self.saveButton.setBackgroundImage(UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1).image, for: .normal)
+        }
+    }
+    
     @objc func callBack(){
         self.complete?(self.picker.selectedRow(inComponent: 0))
         self.dismiss()
@@ -140,5 +175,17 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.items[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        if self.traitCollection.userInterfaceStyle == .dark {
+            if #available(iOS 13.0, *) {
+                return NSAttributedString.init(string: self.items[row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.label])
+            } else {
+                return NSAttributedString.init(string: self.items[row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+            }
+        }else{
+            return nil
+        }
     }
 }

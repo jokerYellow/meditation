@@ -17,7 +17,7 @@ struct SettingItem {
     var title : String
     var accessoryType : UITableViewCell.AccessoryType = .disclosureIndicator
     var value : (()->String)?
-    var trigger : (()->Void)?
+    var trigger : ((UITableViewCell)->Void)?
 }
 
 class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
@@ -37,7 +37,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                             value: {[unowned self] in
                                                 return "\(self.config.workTime.minutes) 分钟"
                                             },
-                                            trigger: { [unowned self] in
+                                            trigger: { [unowned self] _ in
                                                 let picker :Picker = PickerView()
                                                 picker.show(title: "工作时长", items: workTimes.map{"\($0)"}, dw: "分钟",defaultIndex: workTimes.firstIndex(of: self.config.workTime.minutes) ?? 0) { (index) in
                                                 self.config.workTime = workTimes[index].seconds
@@ -51,7 +51,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                             value: {[unowned self] in
                                                 return "\(self.config.breakTime.minutes) 分钟"
                                             },
-                                            trigger: { [unowned self] in
+                                            trigger: { [unowned self] _ in
                                                 let picker :Picker = PickerView()
                                                 picker.show(title: "短休息时长", items: breakTimes.map{"\($0)"}, dw: "分钟",defaultIndex: breakTimes.firstIndex(of: self.config.breakTime.minutes) ?? 0) { (index) in
                                                 self.config.breakTime = breakTimes[index].seconds
@@ -63,7 +63,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                             title: "长休息时长",
                                             value: {[unowned self] in
                                                 return "\(self.config.longBreakTime.minutes) 分钟"},
-                                            trigger: { [unowned self] in
+                                            trigger: { [unowned self] _ in
                                                 let picker :Picker = PickerView()
                                                 picker.show(title: "长休息时长", items: breakTimes.map{"\($0)"}, dw: "分钟",defaultIndex: breakTimes.firstIndex(of: self.config.longBreakTime.minutes) ?? 0) { (index) in
                                                 self.config.longBreakTime = breakTimes[index].seconds
@@ -75,7 +75,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                             title: "循环次数",
                                             value: {[unowned self] in
                                                 return "\(self.config.workPoint) 次"},
-                                           trigger: { [unowned self] in
+                                           trigger: { [unowned self] _ in
                                                let picker :Picker = PickerView()
                                                picker.show(title: "循环次数", items: points.map{"\($0)"}, dw: "次",defaultIndex: points.firstIndex(of: self.config.workPoint) ?? 0) { (index) in
                                                self.config.workPoint = points[index]
@@ -92,12 +92,12 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 SettingItemGroup.init(title: "其他",
                 items: [
                     SettingItem.init(title: "微博",
-                                     trigger: {
+                                     trigger: { _ in
                                         UIApplication.shared.open(URL.init(string: "https://weibo.com/u/2178539252")!, options:[UIApplication.OpenExternalURLOptionsKey : Any](), completionHandler: nil)
                     }),
                     SettingItem.init(title: "分享给其他小伙伴",
-                                     trigger: {[unowned self] in
-                                        self.share()
+                                     trigger: {[unowned self] cell in
+                                        self.share(sourceView: cell)
                     }),
                     SettingItem.init(title: "版本号",
                                      accessoryType: .none,
@@ -151,11 +151,15 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        sources[indexPath.section].items[indexPath.row].trigger?()
+        guard let cell = tableView.cellForRow(at: indexPath) else {return}
+        sources[indexPath.section].items[indexPath.row].trigger?(cell)
     }
      
-    func share() {
+    func share(sourceView:UIView) {
         let activity = UIActivityViewController.init(activityItems: [appUrl], applicationActivities: [UIActivity.init()])
+        //https://stackoverflow.com/questions/25644054/uiactivityviewcontroller-crashing-on-ios-8-ipads
+        //in ipad is popover style
+        activity.popoverPresentationController?.sourceView = sourceView
         self.present(activity , animated: true, completion: nil)
     }
     

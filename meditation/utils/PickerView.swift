@@ -27,21 +27,13 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
     
     let titleLabel : UILabel = {
         let label = UILabel()
-        if #available(iOS 13.0, *) {
-            label.textColor = .label
-        } else {
-            label.textColor = .white
-        }
+        label.textColor = Color.label
         return label
     }()
     
     let dwLabel : UILabel = {
         let label = UILabel()
-        if #available(iOS 13.0, *) {
-            label.textColor = .label
-        } else {
-            label.textColor = .white
-        }
+        label.textColor = Color.label
         return label
     }()
     
@@ -55,13 +47,7 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
         self.addSubview(self.dwLabel)
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 20
-        if #available(iOS 13.0, *) {
-            self.backgroundColor =  UIColor.init(dynamicProvider: { (trait) -> UIColor in
-                return (trait.userInterfaceStyle == .dark) ? UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 1): UIColor.white
-            })
-        } else {
-            self.backgroundColor =  self.picker.backgroundColor
-        }
+        self.backgroundColor = Color.color(light: UIColor.white, dark: UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 1))
         self.layer.maskedCorners = .init(arrayLiteral: .layerMinXMinYCorner,.layerMaxXMinYCorner)
         
         self.saveButton.snp.makeConstraints { (make) in
@@ -104,11 +90,7 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
         let picker = UIPickerView.init()
         picker.dataSource = self
         picker.delegate = self
-        if #available(iOS 13.0, *) {
-            picker.backgroundColor = UIColor.clear
-        } else {
-            picker.backgroundColor = UIColor.clear
-        }
+        picker.backgroundColor = UIColor.clear
         return picker
     }()
     
@@ -150,14 +132,13 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
     }
     
     func updateTrait(){
-        if #available(iOS 13.0, *) {
-            self.saveButton.setTitleColor(UIColor.label, for: .normal)
-            let color = (self.traitCollection.userInterfaceStyle == .dark) ? UIColor.init(red: 0.4, green: 0.4, blue: 0.4, alpha: 1) : UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-            self.saveButton.setBackgroundImage( color.image, for: .normal)
-        } else {
-            self.saveButton.setTitleColor(UIColor.black, for: .normal)
-            self.saveButton.setBackgroundImage(UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1).image, for: .normal)
-        }
+        self.saveButton.setTitleColor(Color.label, for: .normal)
+        self.saveButton.setBackgroundImage(Color.color(light: UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1),
+                                                       dark: UIColor.init(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)).image,
+                                           for: .normal)
+        self.saveButton.setBackgroundImage(Color.color(light: UIColor.init(red: 0.8, green: 0.8, blue: 0.8, alpha: 1),
+                                                       dark: UIColor.init(red: 0.3, green: 0.3, blue: 0.3, alpha: 1)).image,
+                                           for: .highlighted)
     }
     
     @objc func callBack(){
@@ -173,19 +154,8 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
          return self.items.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.items[row]
-    }
-    
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        if self.traitCollection.userInterfaceStyle == .dark {
-            if #available(iOS 13.0, *) {
-                return NSAttributedString.init(string: self.items[row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.label])
-            } else {
-                return NSAttributedString.init(string: self.items[row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
-            }
-        }else{
-            return nil
-        }
+        return NSAttributedString.init(string: self.items[row], attributes: [NSAttributedString.Key.foregroundColor : Color.label,
+                                                                             NSAttributedString.Key.font : UIFont.systemFont(ofSize: UIFont.systemFontSize)])
     }
 }

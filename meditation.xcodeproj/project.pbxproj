@@ -14,6 +14,7 @@
 		BF8440A82487917A00305B02 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8440A72487917A00305B02 /* PickerView.swift */; };
 		BF85D331247E67860064E805 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF85D330247E67860064E805 /* SettingViewController.swift */; };
 		BF85D333247E6DE00064E805 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF85D332247E6DE00064E805 /* Meditation.swift */; };
+		BF9D1E0C248B64D60092B03C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D1E0B248B64D60092B03C /* Color.swift */; };
 		BFBC61E8248395A700903F4F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBC61E7248395A700903F4F /* Config.swift */; };
 		BFBC61EA2483EC1800903F4F /* WorkingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBC61E92483EC1800903F4F /* WorkingState.swift */; };
 		BFBC61EC2483ED2D00903F4F /* WaitingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBC61EB2483ED2D00903F4F /* WaitingState.swift */; };
@@ -48,6 +49,7 @@
 		BF85D330247E67860064E805 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		BF85D332247E6DE00064E805 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
 		BF85D334247E70490064E805 /* meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = meditation.entitlements; sourceTree = "<group>"; };
+		BF9D1E0B248B64D60092B03C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		BFBC61E7248395A700903F4F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		BFBC61E92483EC1800903F4F /* WorkingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingState.swift; sourceTree = "<group>"; };
 		BFBC61EB2483ED2D00903F4F /* WaitingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingState.swift; sourceTree = "<group>"; };
@@ -87,6 +89,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF9D1E08248B644B0092B03C /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				BFE28F3A22F7A9CB005C979E /* ViewController.swift */,
+				BF85D330247E67860064E805 /* SettingViewController.swift */,
+			);
+			path = modules;
+			sourceTree = "<group>";
+		};
+		BF9D1E09248B64850092B03C /* main */ = {
+			isa = PBXGroup;
+			children = (
+				BFBC61E7248395A700903F4F /* Config.swift */,
+				BF85D332247E6DE00064E805 /* Meditation.swift */,
+				BFBC61E92483EC1800903F4F /* WorkingState.swift */,
+				BFBC61EB2483ED2D00903F4F /* WaitingState.swift */,
+				BFBC61ED2483ED3500903F4F /* BreakingState.swift */,
+				BFBE4FB02484DB230077464E /* StateMachine.swift */,
+			);
+			path = main;
+			sourceTree = "<group>";
+		};
+		BF9D1E0A248B649E0092B03C /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				BF7AC322248293550060F38C /* Util.swift */,
+				BFBC61EF2483F14B00903F4F /* Notification.swift */,
+				BF8440A72487917A00305B02 /* PickerView.swift */,
+				BF9D1E0B248B64D60092B03C /* Color.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		BFE28F2C22F7A9CB005C979E = {
 			isa = PBXGroup;
 			children = (
@@ -110,20 +145,12 @@
 		BFE28F3722F7A9CB005C979E /* meditation */ = {
 			isa = PBXGroup;
 			children = (
+				BFE28F3822F7A9CB005C979E /* AppDelegate.swift */,
+				BF9D1E0A248B649E0092B03C /* utils */,
+				BF9D1E09248B64850092B03C /* main */,
+				BF9D1E08248B644B0092B03C /* modules */,
 				BF85D334247E70490064E805 /* meditation.entitlements */,
 				BF5445F722F8732A003F7A30 /* R.generated.swift */,
-				BFE28F3822F7A9CB005C979E /* AppDelegate.swift */,
-				BFE28F3A22F7A9CB005C979E /* ViewController.swift */,
-				BF85D332247E6DE00064E805 /* Meditation.swift */,
-				BFBC61E92483EC1800903F4F /* WorkingState.swift */,
-				BFBC61EB2483ED2D00903F4F /* WaitingState.swift */,
-				BFBC61ED2483ED3500903F4F /* BreakingState.swift */,
-				BFBE4FB02484DB230077464E /* StateMachine.swift */,
-				BFBC61E7248395A700903F4F /* Config.swift */,
-				BF7AC322248293550060F38C /* Util.swift */,
-				BFBC61EF2483F14B00903F4F /* Notification.swift */,
-				BF85D330247E67860064E805 /* SettingViewController.swift */,
-				BF8440A72487917A00305B02 /* PickerView.swift */,
 				BFE28F3F22F7A9CC005C979E /* Assets.xcassets */,
 				BFE28F4122F7A9CC005C979E /* LaunchScreen.storyboard */,
 				BFE28F4422F7A9CC005C979E /* Info.plist */,
@@ -377,6 +404,7 @@
 				BFBC61EC2483ED2D00903F4F /* WaitingState.swift in Sources */,
 				BFBE4FB12484DB230077464E /* StateMachine.swift in Sources */,
 				BF5445F822F8732A003F7A30 /* R.generated.swift in Sources */,
+				BF9D1E0C248B64D60092B03C /* Color.swift in Sources */,
 				BFBC61F02483F14B00903F4F /* Notification.swift in Sources */,
 				BF85D331247E67860064E805 /* SettingViewController.swift in Sources */,
 				BFBC61EA2483EC1800903F4F /* WorkingState.swift in Sources */,

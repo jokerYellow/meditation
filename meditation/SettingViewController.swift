@@ -118,7 +118,6 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
         self.view.addSubview(tableView)
         self.tableView.delegate = self
         self.tableView.dataSource = self

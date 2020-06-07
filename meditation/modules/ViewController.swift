@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     let button :UIButton = {
         let b = UIButton.init()
         b.setBackgroundImage(UIImage.image(color: UIColor.white), for: .normal)
-        b.setTitle("开始", for: .normal)
+        b.setTitle(NSLocalizedString("开始", comment: "开始番茄钟按钮"), for: .normal)
         b.setTitleColor(UIColor.black, for: .normal)
         b.layer.cornerRadius = ViewController.buttonHeight*0.5
         b.layer.masksToBounds = true

@@ -12,9 +12,9 @@ import UserNotifications
 extension Int {
     var duration: String{
         if self/60 > 0 {
-            return "\(self/60)分钟"
+            return "\(self)\(NSLocalizedString("minutes", comment: "分钟"))"
         }
-        return "\(self)秒钟"
+        return "\(self)\(NSLocalizedString("seconds", comment: "秒钟"))"
     }
 }
 
@@ -87,11 +87,11 @@ class Meditation : NSObject, StateMachineDelegate{
         var title: String {
             switch self {
             case .wait:
-                return "开始"
+                return NSLocalizedString("begin", comment: "开始")
             case .isBreak:
-                return "停止休息"
+                return NSLocalizedString("stop break", comment: "停止休息")
             case .isWorking:
-                return "放弃"
+                return NSLocalizedString("quit", comment: "放弃")
             }
         }
 
@@ -105,7 +105,7 @@ class Meditation : NSObject, StateMachineDelegate{
                 }
                 return String.init(format: "%02d:%02d", last / 60, last % 60)
             default:
-                return "开始吧！"
+                return NSLocalizedString("let's go", comment: "开始吧！")
             }
         }
         

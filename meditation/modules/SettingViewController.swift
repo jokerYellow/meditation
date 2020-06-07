@@ -30,16 +30,16 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let breakTimes = [1,2,3,5,8,10]
         let points = [1,2,3,4,5,6,7,8,9,10]
         return [
-                SettingItemGroup.init(title: "番茄钟",
+                SettingItemGroup.init(title: NSLocalizedString("番茄钟", comment: "番茄钟"),
                                       items: [
                                         SettingItem.init(
-                                            title: "工作时长",
+                                            title: NSLocalizedString("工作时长",comment: ""),
                                             value: {[unowned self] in
                                                 return "\(self.config.workTime.minutes) 分钟"
                                             },
                                             trigger: { [unowned self] _ in
                                                 let picker :Picker = PickerView()
-                                                picker.show(title: "工作时长", items: workTimes.map{"\($0)"}, dw: "分钟",defaultIndex: workTimes.firstIndex(of: self.config.workTime.minutes) ?? 0) { (index) in
+                                                picker.show(title: NSLocalizedString("工作时长",comment: ""), items: workTimes.map{"\($0)"}, dw: NSLocalizedString("分钟",comment: ""),defaultIndex: workTimes.firstIndex(of: self.config.workTime.minutes) ?? 0) { (index) in
                                                 self.config.workTime = workTimes[index].seconds
                                                 Util.saveInfo(info: self.config, t: .config)
                                                 self.tableView.reloadData()
@@ -47,37 +47,37 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                             }
                                         ),
                                         SettingItem.init(
-                                            title: "短休息时长",
+                                            title: NSLocalizedString("短休息时长",comment: ""),
                                             value: {[unowned self] in
-                                                return "\(self.config.breakTime.minutes) 分钟"
+                                                return "\(self.config.breakTime.minutes) \(NSLocalizedString("分钟",comment: ""))"
                                             },
                                             trigger: { [unowned self] _ in
                                                 let picker :Picker = PickerView()
-                                                picker.show(title: "短休息时长", items: breakTimes.map{"\($0)"}, dw: "分钟",defaultIndex: breakTimes.firstIndex(of: self.config.breakTime.minutes) ?? 0) { (index) in
+                                                picker.show(title: NSLocalizedString("短休息时长",comment: ""), items: breakTimes.map{"\($0)"}, dw: NSLocalizedString("分钟",comment: ""),defaultIndex: breakTimes.firstIndex(of: self.config.breakTime.minutes) ?? 0) { (index) in
                                                 self.config.breakTime = breakTimes[index].seconds
                                                 Util.saveInfo(info: self.config, t: .config)
                                                 self.tableView.reloadData()
                                              }
                                          }),
                                         SettingItem.init(
-                                            title: "长休息时长",
+                                            title: NSLocalizedString("长休息时长",comment: ""),
                                             value: {[unowned self] in
-                                                return "\(self.config.longBreakTime.minutes) 分钟"},
+                                                return "\(self.config.longBreakTime.minutes) \(NSLocalizedString("分钟",comment: ""))"},
                                             trigger: { [unowned self] _ in
                                                 let picker :Picker = PickerView()
-                                                picker.show(title: "长休息时长", items: breakTimes.map{"\($0)"}, dw: "分钟",defaultIndex: breakTimes.firstIndex(of: self.config.longBreakTime.minutes) ?? 0) { (index) in
+                                                picker.show(title: NSLocalizedString("长休息时长",comment: ""), items: breakTimes.map{"\($0)"}, dw: NSLocalizedString("分钟",comment: ""),defaultIndex: breakTimes.firstIndex(of: self.config.longBreakTime.minutes) ?? 0) { (index) in
                                                 self.config.longBreakTime = breakTimes[index].seconds
                                                 Util.saveInfo(info: self.config, t: .config)
                                                 self.tableView.reloadData()
                                             }
                                         }),
                                         SettingItem.init(
-                                            title: "循环次数",
+                                            title: NSLocalizedString("循环次数",comment: ""),
                                             value: {[unowned self] in
-                                                return "\(self.config.workPoint) 次"},
+                                                return "\(self.config.workPoint) \(NSLocalizedString("次",comment: ""))"},
                                            trigger: { [unowned self] _ in
                                                let picker :Picker = PickerView()
-                                               picker.show(title: "循环次数", items: points.map{"\($0)"}, dw: "次",defaultIndex: points.firstIndex(of: self.config.workPoint) ?? 0) { (index) in
+                                               picker.show(title:NSLocalizedString("循环次数",comment: ""), items: points.map{"\($0)"}, dw: NSLocalizedString("次",comment: ""),defaultIndex: points.firstIndex(of: self.config.workPoint) ?? 0) { (index) in
                                                self.config.workPoint = points[index]
                                                Util.saveInfo(info: self.config, t: .config)
                                                self.tableView.reloadData()
@@ -89,17 +89,17 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
 //                        SettingItem.init(title: "背景图片切换"),
 //                        SettingItem.init(title: "背景音乐切换"),
 //                        SettingItem.init(title: "动画切换")]),
-                SettingItemGroup.init(title: "其他",
+                SettingItemGroup.init(title: NSLocalizedString("其他",comment: ""),
                 items: [
-                    SettingItem.init(title: "微博",
+                    SettingItem.init(title: NSLocalizedString("微博",comment: ""),
                                      trigger: { _ in
                                         UIApplication.shared.open(URL.init(string: "https://weibo.com/u/2178539252")!, options:[UIApplication.OpenExternalURLOptionsKey : Any](), completionHandler: nil)
                     }),
-                    SettingItem.init(title: "分享给其他小伙伴",
+                    SettingItem.init(title: NSLocalizedString("分享给其他小伙伴",comment: ""),
                                      trigger: {[unowned self] cell in
                                         self.share(sourceView: cell)
                     }),
-                    SettingItem.init(title: "版本号",
+                    SettingItem.init(title: NSLocalizedString("版本号",comment: ""),
                                      accessoryType: .none,
                                      value: {
                                         return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
@@ -121,7 +121,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.view.addSubview(tableView)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.title = "设置"
+        self.title = NSLocalizedString("设置",comment: "")
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.leading.bottom.trailing.equalTo(self.view)

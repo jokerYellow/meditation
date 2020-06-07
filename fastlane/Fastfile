@@ -48,6 +48,15 @@ platform :ios do
       include_bitcode: true,
       xcargs: "-allowProvisioningUpdates"
     )
-    upload_to_app_store(username:"592679546@qq.com")
+    upload_to_app_store(
+      username:"592679546@qq.com",
+      skip_screenshots:true,
+      force:true,
+      submit_for_review:true,
+      submission_information:{
+        add_id_info_uses_idfa:false,
+        export_compliance_uses_encryption:false
+      },
+    )
   end
 end

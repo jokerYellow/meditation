@@ -10,6 +10,8 @@
 		89A344B5732C99B6F01F085A /* Pods_meditationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F904402ABD4AF494BF4E2F4 /* Pods_meditationTests.framework */; };
 		BD7C3A421DD710AFBA99F63D /* Pods_meditation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23501BADD3D9561084A57A3C /* Pods_meditation.framework */; };
 		BF5445F822F8732A003F7A30 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5445F722F8732A003F7A30 /* R.generated.swift */; };
+		BF747BEB248C83DE0045174D /* sharp.m4r in Resources */ = {isa = PBXBuildFile; fileRef = BF747BEA248C83DE0045174D /* sharp.m4r */; };
+		BF747BED248C83EB0045174D /* eventually.m4r in Resources */ = {isa = PBXBuildFile; fileRef = BF747BEC248C83EB0045174D /* eventually.m4r */; };
 		BF7AC323248293550060F38C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7AC322248293550060F38C /* Util.swift */; };
 		BF8440A82487917A00305B02 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8440A72487917A00305B02 /* PickerView.swift */; };
 		BF85D331247E67860064E805 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF85D330247E67860064E805 /* SettingViewController.swift */; };
@@ -44,6 +46,8 @@
 		42E68EFCA1E114F714228A55 /* Pods-meditationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meditationTests.debug.xcconfig"; path = "Target Support Files/Pods-meditationTests/Pods-meditationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F904402ABD4AF494BF4E2F4 /* Pods_meditationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_meditationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF5445F722F8732A003F7A30 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		BF747BEA248C83DE0045174D /* sharp.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; path = sharp.m4r; sourceTree = "<group>"; };
+		BF747BEC248C83EB0045174D /* eventually.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; path = eventually.m4r; sourceTree = "<group>"; };
 		BF7AC322248293550060F38C /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		BF8440A72487917A00305B02 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		BF85D330247E67860064E805 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +93,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF747BE9248C81F20045174D /* sources */ = {
+			isa = PBXGroup;
+			children = (
+				BF747BEC248C83EB0045174D /* eventually.m4r */,
+				BF747BEA248C83DE0045174D /* sharp.m4r */,
+			);
+			path = sources;
+			sourceTree = "<group>";
+		};
 		BF9D1E08248B644B0092B03C /* modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				BFE28F3822F7A9CB005C979E /* AppDelegate.swift */,
+				BF747BE9248C81F20045174D /* sources */,
 				BF9D1E0A248B649E0092B03C /* utils */,
 				BF9D1E09248B64850092B03C /* main */,
 				BF9D1E08248B644B0092B03C /* modules */,
@@ -273,8 +287,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF747BED248C83EB0045174D /* eventually.m4r in Resources */,
 				BFE28F4322F7A9CC005C979E /* LaunchScreen.storyboard in Resources */,
 				BFE28F4022F7A9CC005C979E /* Assets.xcassets in Resources */,
+				BF747BEB248C83DE0045174D /* sharp.m4r in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

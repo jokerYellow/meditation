@@ -12,6 +12,16 @@ import UserNotifications
 enum notificationId : String{
     case workDone = "com.pipasese.meditation.workDone"
     case breakOver = "com.pipasese.meditation.breakOver"
+    
+    var sound : String {
+        switch self {
+        case .workDone:
+            return "sharp.m4r"
+        case .breakOver:
+            return "eventually.m4r"
+        }
+    }
+    
 }
 
 class Notification : NSObject, UNUserNotificationCenterDelegate {
@@ -40,7 +50,7 @@ class Notification : NSObject, UNUserNotificationCenterDelegate {
             }
             let content = UNMutableNotificationContent.init()
             content.body = notification
-            content.sound = .default
+            content.sound = UNNotificationSound.init(named: UNNotificationSoundName.init(id.sound))
             let request = UNNotificationRequest.init(identifier: id.rawValue,
                                                      content: content,
                                                      trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: interval, repeats: false))

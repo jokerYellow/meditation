@@ -16,6 +16,44 @@ struct R: Rswift.Validatable {
     try intern.validate()
   }
   
+  /// This `R.file` struct is generated, and contains static references to 4 files.
+  struct file {
+    /// Resource file `eventually.m4r`.
+    static let eventuallyM4r = Rswift.FileResource(bundle: R.hostingBundle, name: "eventually", pathExtension: "m4r")
+    /// Resource file `piece-of-cake.m4r`.
+    static let pieceOfCakeM4r = Rswift.FileResource(bundle: R.hostingBundle, name: "piece-of-cake", pathExtension: "m4r")
+    /// Resource file `pristine.m4r`.
+    static let pristineM4r = Rswift.FileResource(bundle: R.hostingBundle, name: "pristine", pathExtension: "m4r")
+    /// Resource file `sharp.m4r`.
+    static let sharpM4r = Rswift.FileResource(bundle: R.hostingBundle, name: "sharp", pathExtension: "m4r")
+    
+    /// `bundle.url(forResource: "eventually", withExtension: "m4r")`
+    static func eventuallyM4r(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.eventuallyM4r
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+    
+    /// `bundle.url(forResource: "piece-of-cake", withExtension: "m4r")`
+    static func pieceOfCakeM4r(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.pieceOfCakeM4r
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+    
+    /// `bundle.url(forResource: "pristine", withExtension: "m4r")`
+    static func pristineM4r(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.pristineM4r
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+    
+    /// `bundle.url(forResource: "sharp", withExtension: "m4r")`
+    static func sharpM4r(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.sharpM4r
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+    
+    fileprivate init() {}
+  }
+  
   /// This `R.image` struct is generated, and contains static references to 3 images.
   struct image {
     /// Image `background`.

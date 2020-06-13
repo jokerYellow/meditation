@@ -89,6 +89,39 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
 //                        SettingItem.init(title: "背景图片切换"),
 //                        SettingItem.init(title: "背景音乐切换"),
 //                        SettingItem.init(title: "动画切换")]),
+                SettingItemGroup.init(title: NSLocalizedString("Theme",comment: ""),
+                                      items: [
+                SettingItem.init(title: NSLocalizedString("Current Theme",comment: ""),
+                                 value: {
+                                    return ThemeManager.shared.theme.description
+                },
+                                 trigger: { [unowned self] cell in
+                                    let alert = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+                                    
+                                    let change : (ThemeManager.Theme,UITableViewCell)->Void = { [unowned self](theme,cell) in
+                                        ThemeManager.shared.theme = theme
+                                        guard let index = self.tableView.indexPath(for: cell) else {
+                                            return
+                                        }
+                                        self.tableView.reloadRows(at: [index], with: .none)
+                                    }
+                                    
+                                    alert.addAction(UIAlertAction.init(title: ThemeManager.Theme.dark.description, style: .default, handler: { (_) in
+                                        change(.dark,cell)
+                                    }))
+                                    alert.addAction(UIAlertAction.init(title: ThemeManager.Theme.light.description, style: .default, handler: { (_) in
+                                        change(.light,cell)
+                                    }))
+                                    alert.addAction(UIAlertAction.init(title: ThemeManager.Theme.system.description, style: .default, handler: { (_) in
+                                        change(.system,cell)
+                                    }))
+                                    alert.addAction(UIAlertAction.init(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (_) in
+                                                                           
+                                    }))
+                                    self.present(alert, animated: true, completion: nil)
+                                    
+                })]),
+            
                 SettingItemGroup.init(title: NSLocalizedString("其他",comment: ""),
                 items: [
                     SettingItem.init(title: NSLocalizedString("微博",comment: ""),

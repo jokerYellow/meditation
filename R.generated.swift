@@ -90,7 +90,7 @@ struct R: Rswift.Validatable {
       fileprivate init() {}
     }
     
-    /// This `R.string.localizable` struct is generated, and contains static references to 22 localization keys.
+    /// This `R.string.localizable` struct is generated, and contains static references to 28 localization keys.
     struct localizable {
       /// en translation:  minutes
       /// 
@@ -176,10 +176,34 @@ struct R: Rswift.Validatable {
       /// 
       /// Locales: en, zh-Hans
       static let 番茄钟 = Rswift.StringResource(key: "番茄钟", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// zh-Hans translation: 主题
+      /// 
+      /// Locales: zh-Hans
+      static let theme = Rswift.StringResource(key: "Theme", tableName: "Localizable", bundle: R.hostingBundle, locales: ["zh-Hans"], comment: nil)
       /// zh-Hans translation: 保存
       /// 
       /// Locales: zh-Hans
       static let save = Rswift.StringResource(key: "Save", tableName: "Localizable", bundle: R.hostingBundle, locales: ["zh-Hans"], comment: nil)
+      /// zh-Hans translation: 取消
+      /// 
+      /// Locales: zh-Hans
+      static let cancel = Rswift.StringResource(key: "Cancel", tableName: "Localizable", bundle: R.hostingBundle, locales: ["zh-Hans"], comment: nil)
+      /// zh-Hans translation: 当前主题
+      /// 
+      /// Locales: zh-Hans
+      static let currentTheme = Rswift.StringResource(key: "Current Theme", tableName: "Localizable", bundle: R.hostingBundle, locales: ["zh-Hans"], comment: nil)
+      /// zh-Hans translation: 浅色
+      /// 
+      /// Locales: zh-Hans
+      static let light = Rswift.StringResource(key: "Light", tableName: "Localizable", bundle: R.hostingBundle, locales: ["zh-Hans"], comment: nil)
+      /// zh-Hans translation: 深色
+      /// 
+      /// Locales: zh-Hans
+      static let dark = Rswift.StringResource(key: "Dark", tableName: "Localizable", bundle: R.hostingBundle, locales: ["zh-Hans"], comment: nil)
+      /// zh-Hans translation: 跟随系统
+      /// 
+      /// Locales: zh-Hans
+      static let system = Rswift.StringResource(key: "System", tableName: "Localizable", bundle: R.hostingBundle, locales: ["zh-Hans"], comment: nil)
       
       /// en translation:  minutes
       /// 
@@ -328,11 +352,53 @@ struct R: Rswift.Validatable {
         return NSLocalizedString("番茄钟", bundle: R.hostingBundle, comment: "")
       }
       
+      /// zh-Hans translation: 主题
+      /// 
+      /// Locales: zh-Hans
+      static func theme(_: Void = ()) -> String {
+        return NSLocalizedString("Theme", bundle: R.hostingBundle, comment: "")
+      }
+      
       /// zh-Hans translation: 保存
       /// 
       /// Locales: zh-Hans
       static func save(_: Void = ()) -> String {
         return NSLocalizedString("Save", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// zh-Hans translation: 取消
+      /// 
+      /// Locales: zh-Hans
+      static func cancel(_: Void = ()) -> String {
+        return NSLocalizedString("Cancel", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// zh-Hans translation: 当前主题
+      /// 
+      /// Locales: zh-Hans
+      static func currentTheme(_: Void = ()) -> String {
+        return NSLocalizedString("Current Theme", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// zh-Hans translation: 浅色
+      /// 
+      /// Locales: zh-Hans
+      static func light(_: Void = ()) -> String {
+        return NSLocalizedString("Light", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// zh-Hans translation: 深色
+      /// 
+      /// Locales: zh-Hans
+      static func dark(_: Void = ()) -> String {
+        return NSLocalizedString("Dark", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// zh-Hans translation: 跟随系统
+      /// 
+      /// Locales: zh-Hans
+      static func system(_: Void = ()) -> String {
+        return NSLocalizedString("System", bundle: R.hostingBundle, comment: "")
       }
       
       fileprivate init() {}
@@ -371,7 +437,6 @@ struct _R: Rswift.Validatable {
       let name = "LaunchScreen"
       
       static func validate() throws {
-        if UIKit.UIImage(named: "background", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'background' is used in storyboard 'LaunchScreen', but couldn't be loaded.") }
         if #available(iOS 11.0, *) {
         }
       }

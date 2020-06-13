@@ -46,8 +46,20 @@
 /* 开始 */
 "begin" = "开始";
 
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+/* No comment provided by engineer. */
+"Current Theme" = "当前主题";
+
+/* No comment provided by engineer. */
+"Dark" = "深色";
+
 /* 开始吧！ */
 "let's go" = "上路吧！";
+
+/* No comment provided by engineer. */
+"Light" = "浅色";
 
 /* 分钟 */
 "minutes" = "分钟";
@@ -63,4 +75,10 @@
 
 /* 停止休息 */
 "stop break" = "停止休息";
+
+/* No comment provided by engineer. */
+"System" = "跟随系统";
+
+/* No comment provided by engineer. */
+"Theme" = "主题";
 

@@ -14,6 +14,7 @@ let appUrl = URL.init(string: "https://apps.apple.com/cn/app/id1516728253")!
 enum StoreType:String{
     case state = "state"
     case config = "config"
+    case theme = "theme"
     
     static var storedDirectory : URL {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!

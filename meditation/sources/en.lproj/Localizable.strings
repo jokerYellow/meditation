@@ -26,20 +26,37 @@
 "其他" = "Other";
 
 /* No comment provided by engineer. */
-"设置" = "Setting";
+"设置" = "Settings";
 
 /* No comment provided by engineer. */
-"完成一个番茄钟，休息一下吧" = "great,have a break";
+"完成一个番茄钟，休息一下吧" = "Have a break";
 
 /* No comment provided by engineer. */
-"微博" = "weibo";
+"微博" = "Author Weibo";
 
 /* No comment provided by engineer. */
 "循环次数" = "Long Break Every";
 
 /* No comment provided by engineer. */
-"已经休息%s了，开始下一个番茄吧" = "Have break for %s.Let's do the next one";
+"已经休息%@了，开始下一个番茄吧" = "Have break for %@.Let's do the next one";
 
 /* No comment provided by engineer. */
 "长休息时长" = "Long Break Duration";
 
+/* 开始 */
+"begin" = "Go";
+
+/* 开始吧！ */
+"let's go" = "Let's go";
+
+/* 放弃 */
+"quit" = "Quit";
+
+/* 停止休息 */
+"stop break" = "Stop break";
+
+/* 分钟 */
+"minutes" = " minutes";
+
+/* 秒钟 */
+"seconds" = " seconds";

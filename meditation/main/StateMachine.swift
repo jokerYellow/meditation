@@ -46,7 +46,7 @@ extension StateMachine{
     func beginWork(workTime:Int,breakTime:Int) {
         Notification.shared.clearNotifications()
         Notification.shared.sendNotification(notification: NSLocalizedString("完成一个番茄钟，休息一下吧", comment: ""), interval: TimeInterval(workTime), id: .workDone)
-        Notification.shared.sendNotification(notification: String.init(format: NSLocalizedString("已经休息%s了，开始下一个番茄吧", comment: ""), breakTime.duration), interval: TimeInterval(breakTime + workTime), id : .breakOver)
+        Notification.shared.sendNotification(notification: String.init(format: NSLocalizedString("已经休息%@了，开始下一个番茄吧", comment: ""), breakTime.duration), interval: TimeInterval(breakTime + workTime), id : .breakOver)
     }
     
 }

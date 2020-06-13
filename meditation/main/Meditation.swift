@@ -12,7 +12,7 @@ import UserNotifications
 extension Int {
     var duration: String{
         if self/60 > 0 {
-            return "\(self)\(NSLocalizedString("minutes", comment: "分钟"))"
+            return "\(self/60)\(NSLocalizedString("minutes", comment: "分钟"))"
         }
         return "\(self)\(NSLocalizedString("seconds", comment: "秒钟"))"
     }

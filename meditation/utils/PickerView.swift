@@ -18,7 +18,7 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
     
     lazy var saveButton : UIButton = {
         let btn = UIButton()
-        btn.setTitle("保存", for: .normal)
+        btn.setTitle(NSLocalizedString("Save", comment: ""), for: .normal)
         btn.layer.cornerRadius = 5
         btn.layer.masksToBounds = true
         btn.addTarget(self, action: #selector(callBack), for: .touchUpInside)
@@ -68,7 +68,7 @@ class PickerView: UIView,Picker,UIPickerViewDataSource,UIPickerViewDelegate {
             make.bottom.equalTo(self.saveButton.snp.top).offset(-10).priority(.medium)
         }
         self.dwLabel.snp.makeConstraints { (make) in
-            make.centerX.equalTo(self).offset(40)
+            make.leading.equalTo(self.snp.centerX).offset(20)
             make.centerY.equalTo(self.picker)
         }
         self.updateTrait()

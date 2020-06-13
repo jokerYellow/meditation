@@ -35,7 +35,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                         SettingItem.init(
                                             title: NSLocalizedString("工作时长",comment: ""),
                                             value: {[unowned self] in
-                                                return "\(self.config.workTime.minutes) 分钟"
+                                                return "\(self.config.workTime.minutes) \(NSLocalizedString("分钟",comment: ""))"
                                             },
                                             trigger: { [unowned self] _ in
                                                 let picker :Picker = PickerView()

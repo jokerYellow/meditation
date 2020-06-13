@@ -1,5 +1,14 @@
 /* No comment provided by engineer. */
+"版本号" = "版本";
+
+/* No comment provided by engineer. */
+"次" = "次";
+
+/* No comment provided by engineer. */
 "短休息时长" = "休息时长";
+
+/* 番茄钟 */
+"番茄钟" = "番茄钟";
 
 /* No comment provided by engineer. */
 "分享给其他小伙伴" = "分享";
@@ -8,7 +17,10 @@
 "分钟" = "分钟";
 
 /* No comment provided by engineer. */
-"工作时长" = "集中时间";
+"工作时长" = "集中时长";
+
+/* 开始番茄钟按钮 */
+"开始" = "上路吧";
 
 /* No comment provided by engineer. */
 "其他" = "其他";
@@ -17,7 +29,16 @@
 "设置" = "设置";
 
 /* No comment provided by engineer. */
-"完成一个番茄钟，休息一下吧" = "完成了一个番茄钟，休息一下吧";
+"完成一个番茄钟，休息一下吧" = "休息一下吧";
+
+/* No comment provided by engineer. */
+"微博" = "微博";
+
+/* No comment provided by engineer. */
+"循环次数" = "几次之后长休息";
+
+/* No comment provided by engineer. */
+"已经休息%@了，开始下一个番茄吧" = "已经休息%@了，开始下一个番茄吧";
 
 /* No comment provided by engineer. */
 "长休息时长" = "长休息时长";
@@ -34,8 +55,8 @@
 /* 放弃 */
 "quit" = "放弃";
 
-/* pickerView保存按钮 */
-"save" = "保存";
+/* No comment provided by engineer. */
+"Save" = "保存";
 
 /* 秒钟 */
 "seconds" = "秒钟";

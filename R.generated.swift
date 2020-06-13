@@ -16,32 +16,16 @@ struct R: Rswift.Validatable {
     try intern.validate()
   }
   
-  /// This `R.file` struct is generated, and contains static references to 4 files.
+  /// This `R.file` struct is generated, and contains static references to 2 files.
   struct file {
     /// Resource file `eventually.m4r`.
     static let eventuallyM4r = Rswift.FileResource(bundle: R.hostingBundle, name: "eventually", pathExtension: "m4r")
-    /// Resource file `piece-of-cake.m4r`.
-    static let pieceOfCakeM4r = Rswift.FileResource(bundle: R.hostingBundle, name: "piece-of-cake", pathExtension: "m4r")
-    /// Resource file `pristine.m4r`.
-    static let pristineM4r = Rswift.FileResource(bundle: R.hostingBundle, name: "pristine", pathExtension: "m4r")
     /// Resource file `sharp.m4r`.
     static let sharpM4r = Rswift.FileResource(bundle: R.hostingBundle, name: "sharp", pathExtension: "m4r")
     
     /// `bundle.url(forResource: "eventually", withExtension: "m4r")`
     static func eventuallyM4r(_: Void = ()) -> Foundation.URL? {
       let fileResource = R.file.eventuallyM4r
-      return fileResource.bundle.url(forResource: fileResource)
-    }
-    
-    /// `bundle.url(forResource: "piece-of-cake", withExtension: "m4r")`
-    static func pieceOfCakeM4r(_: Void = ()) -> Foundation.URL? {
-      let fileResource = R.file.pieceOfCakeM4r
-      return fileResource.bundle.url(forResource: fileResource)
-    }
-    
-    /// `bundle.url(forResource: "pristine", withExtension: "m4r")`
-    static func pristineM4r(_: Void = ()) -> Foundation.URL? {
-      let fileResource = R.file.pristineM4r
       return fileResource.bundle.url(forResource: fileResource)
     }
     
@@ -54,23 +38,16 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.image` struct is generated, and contains static references to 3 images.
+  /// This `R.image` struct is generated, and contains static references to 2 images.
   struct image {
     /// Image `background`.
     static let background = Rswift.ImageResource(bundle: R.hostingBundle, name: "background")
-    /// Image `circle`.
-    static let circle = Rswift.ImageResource(bundle: R.hostingBundle, name: "circle")
     /// Image `setting`.
     static let setting = Rswift.ImageResource(bundle: R.hostingBundle, name: "setting")
     
     /// `UIImage(named: "background", bundle: ..., traitCollection: ...)`
     static func background(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.background, compatibleWith: traitCollection)
-    }
-    
-    /// `UIImage(named: "circle", bundle: ..., traitCollection: ...)`
-    static func circle(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.circle, compatibleWith: traitCollection)
     }
     
     /// `UIImage(named: "setting", bundle: ..., traitCollection: ...)`
@@ -89,6 +66,276 @@ struct R: Rswift.Validatable {
     /// `UIStoryboard(name: "LaunchScreen", bundle: ...)`
     static func launchScreen(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.launchScreen)
+    }
+    
+    fileprivate init() {}
+  }
+  
+  /// This `R.string` struct is generated, and contains static references to 2 localization tables.
+  struct string {
+    /// This `R.string.infoPlist` struct is generated, and contains static references to 1 localization keys.
+    struct infoPlist {
+      /// en translation: Tomato Clock
+      /// 
+      /// Locales: en, zh-Hans
+      static let cfBundleDisplayName = Rswift.StringResource(key: "CFBundleDisplayName", tableName: "InfoPlist", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      
+      /// en translation: Tomato Clock
+      /// 
+      /// Locales: en, zh-Hans
+      static func cfBundleDisplayName(_: Void = ()) -> String {
+        return NSLocalizedString("CFBundleDisplayName", tableName: "InfoPlist", bundle: R.hostingBundle, comment: "")
+      }
+      
+      fileprivate init() {}
+    }
+    
+    /// This `R.string.localizable` struct is generated, and contains static references to 22 localization keys.
+    struct localizable {
+      /// en translation:  minutes
+      /// 
+      /// Locales: en, zh-Hans
+      static let minutes = Rswift.StringResource(key: "minutes", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation:  seconds
+      /// 
+      /// Locales: en, zh-Hans
+      static let seconds = Rswift.StringResource(key: "seconds", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Author Weibo
+      /// 
+      /// Locales: en, zh-Hans
+      static let 微博 = Rswift.StringResource(key: "微博", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Break Duration
+      /// 
+      /// Locales: en, zh-Hans
+      static let 短休息时长 = Rswift.StringResource(key: "短休息时长", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Focus Duration
+      /// 
+      /// Locales: en, zh-Hans
+      static let 工作时长 = Rswift.StringResource(key: "工作时长", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Go
+      /// 
+      /// Locales: en, zh-Hans
+      static let begin = Rswift.StringResource(key: "begin", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Go
+      /// 
+      /// Locales: en, zh-Hans
+      static let 开始 = Rswift.StringResource(key: "开始", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Have a break
+      /// 
+      /// Locales: en, zh-Hans
+      static let 完成一个番茄钟休息一下吧 = Rswift.StringResource(key: "完成一个番茄钟，休息一下吧", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Have break for %@.Let's do the next one
+      /// 
+      /// Locales: en, zh-Hans
+      static let 已经休息了开始下一个番茄吧 = Rswift.StringResource(key: "已经休息%@了，开始下一个番茄吧", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Let's go
+      /// 
+      /// Locales: en, zh-Hans
+      static let letSGo = Rswift.StringResource(key: "let's go", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Long Break Duration
+      /// 
+      /// Locales: en, zh-Hans
+      static let 长休息时长 = Rswift.StringResource(key: "长休息时长", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Long Break Every
+      /// 
+      /// Locales: en, zh-Hans
+      static let 循环次数 = Rswift.StringResource(key: "循环次数", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Other
+      /// 
+      /// Locales: en, zh-Hans
+      static let 其他 = Rswift.StringResource(key: "其他", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Quit
+      /// 
+      /// Locales: en, zh-Hans
+      static let quit = Rswift.StringResource(key: "quit", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Settings
+      /// 
+      /// Locales: en, zh-Hans
+      static let 设置 = Rswift.StringResource(key: "设置", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Share
+      /// 
+      /// Locales: en, zh-Hans
+      static let 分享给其他小伙伴 = Rswift.StringResource(key: "分享给其他小伙伴", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Stop break
+      /// 
+      /// Locales: en, zh-Hans
+      static let stopBreak = Rswift.StringResource(key: "stop break", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Version
+      /// 
+      /// Locales: en, zh-Hans
+      static let 版本号 = Rswift.StringResource(key: "版本号", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: minutes
+      /// 
+      /// Locales: en, zh-Hans
+      static let 分钟 = Rswift.StringResource(key: "分钟", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: times
+      /// 
+      /// Locales: en, zh-Hans
+      static let 次 = Rswift.StringResource(key: "次", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: tomato clock
+      /// 
+      /// Locales: en, zh-Hans
+      static let 番茄钟 = Rswift.StringResource(key: "番茄钟", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// zh-Hans translation: 保存
+      /// 
+      /// Locales: zh-Hans
+      static let save = Rswift.StringResource(key: "Save", tableName: "Localizable", bundle: R.hostingBundle, locales: ["zh-Hans"], comment: nil)
+      
+      /// en translation:  minutes
+      /// 
+      /// Locales: en, zh-Hans
+      static func minutes(_: Void = ()) -> String {
+        return NSLocalizedString("minutes", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation:  seconds
+      /// 
+      /// Locales: en, zh-Hans
+      static func seconds(_: Void = ()) -> String {
+        return NSLocalizedString("seconds", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Author Weibo
+      /// 
+      /// Locales: en, zh-Hans
+      static func 微博(_: Void = ()) -> String {
+        return NSLocalizedString("微博", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Break Duration
+      /// 
+      /// Locales: en, zh-Hans
+      static func 短休息时长(_: Void = ()) -> String {
+        return NSLocalizedString("短休息时长", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Focus Duration
+      /// 
+      /// Locales: en, zh-Hans
+      static func 工作时长(_: Void = ()) -> String {
+        return NSLocalizedString("工作时长", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Go
+      /// 
+      /// Locales: en, zh-Hans
+      static func begin(_: Void = ()) -> String {
+        return NSLocalizedString("begin", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Go
+      /// 
+      /// Locales: en, zh-Hans
+      static func 开始(_: Void = ()) -> String {
+        return NSLocalizedString("开始", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Have a break
+      /// 
+      /// Locales: en, zh-Hans
+      static func 完成一个番茄钟休息一下吧(_: Void = ()) -> String {
+        return NSLocalizedString("完成一个番茄钟，休息一下吧", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Have break for %@.Let's do the next one
+      /// 
+      /// Locales: en, zh-Hans
+      static func 已经休息了开始下一个番茄吧(_ value1: String) -> String {
+        return String(format: NSLocalizedString("已经休息%@了，开始下一个番茄吧", bundle: R.hostingBundle, comment: ""), locale: R.applicationLocale, value1)
+      }
+      
+      /// en translation: Let's go
+      /// 
+      /// Locales: en, zh-Hans
+      static func letSGo(_: Void = ()) -> String {
+        return NSLocalizedString("let's go", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Long Break Duration
+      /// 
+      /// Locales: en, zh-Hans
+      static func 长休息时长(_: Void = ()) -> String {
+        return NSLocalizedString("长休息时长", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Long Break Every
+      /// 
+      /// Locales: en, zh-Hans
+      static func 循环次数(_: Void = ()) -> String {
+        return NSLocalizedString("循环次数", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Other
+      /// 
+      /// Locales: en, zh-Hans
+      static func 其他(_: Void = ()) -> String {
+        return NSLocalizedString("其他", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Quit
+      /// 
+      /// Locales: en, zh-Hans
+      static func quit(_: Void = ()) -> String {
+        return NSLocalizedString("quit", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Settings
+      /// 
+      /// Locales: en, zh-Hans
+      static func 设置(_: Void = ()) -> String {
+        return NSLocalizedString("设置", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Share
+      /// 
+      /// Locales: en, zh-Hans
+      static func 分享给其他小伙伴(_: Void = ()) -> String {
+        return NSLocalizedString("分享给其他小伙伴", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Stop break
+      /// 
+      /// Locales: en, zh-Hans
+      static func stopBreak(_: Void = ()) -> String {
+        return NSLocalizedString("stop break", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: Version
+      /// 
+      /// Locales: en, zh-Hans
+      static func 版本号(_: Void = ()) -> String {
+        return NSLocalizedString("版本号", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: minutes
+      /// 
+      /// Locales: en, zh-Hans
+      static func 分钟(_: Void = ()) -> String {
+        return NSLocalizedString("分钟", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: times
+      /// 
+      /// Locales: en, zh-Hans
+      static func 次(_: Void = ()) -> String {
+        return NSLocalizedString("次", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// en translation: tomato clock
+      /// 
+      /// Locales: en, zh-Hans
+      static func 番茄钟(_: Void = ()) -> String {
+        return NSLocalizedString("番茄钟", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// zh-Hans translation: 保存
+      /// 
+      /// Locales: zh-Hans
+      static func save(_: Void = ()) -> String {
+        return NSLocalizedString("Save", bundle: R.hostingBundle, comment: "")
+      }
+      
+      fileprivate init() {}
     }
     
     fileprivate init() {}

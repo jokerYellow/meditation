@@ -118,6 +118,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                     alert.addAction(UIAlertAction.init(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (_) in
                                                                            
                                     }))
+                                    alert.popoverPresentationController?.sourceView = cell
                                     self.present(alert, animated: true, completion: nil)
                                     
                 })]),

@@ -27,7 +27,7 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     lazy var sources : [SettingItemGroup] = {
         let workTimes = [5,8,10,15,20,25,30,35,40]
-        let breakTimes = [1,2,3,5,8,10]
+        let breakTimes = [1,2,3,5,8,10,15,20]
         let points = [1,2,3,4,5,6,7,8,9,10]
         let theme = SettingItemGroup.init(title: NSLocalizedString("Theme",comment: ""),
                               items: [

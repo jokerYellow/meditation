@@ -12,6 +12,8 @@
 		BF0A0BB824946ED3003ECABD /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A0BB724946ED3003ECABD /* ThemeManager.swift */; };
 		BF0F6D61248C9B8600036D1B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF0F6D63248C9B8600036D1B /* Localizable.strings */; };
 		BF0F6D67248C9D1D00036D1B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF0F6D65248C9D1D00036D1B /* InfoPlist.strings */; };
+		BF4D81B2265A4E6800AEEF92 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D81B1265A4E6800AEEF92 /* SwitchCell.swift */; };
+		BF4D81B6265BFBDD00AEEF92 /* ScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D81B5265BFBDD00AEEF92 /* ScreenManager.swift */; };
 		BF5445F822F8732A003F7A30 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5445F722F8732A003F7A30 /* R.generated.swift */; };
 		BF747BEB248C83DE0045174D /* sharp.m4r in Resources */ = {isa = PBXBuildFile; fileRef = BF747BEA248C83DE0045174D /* sharp.m4r */; };
 		BF747BED248C83EB0045174D /* eventually.m4r in Resources */ = {isa = PBXBuildFile; fileRef = BF747BEC248C83EB0045174D /* eventually.m4r */; };
@@ -53,6 +55,8 @@
 		BF0F6D64248C9B8800036D1B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BF0F6D66248C9D1D00036D1B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BF0F6D68248C9F8000036D1B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		BF4D81B1265A4E6800AEEF92 /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
+		BF4D81B5265BFBDD00AEEF92 /* ScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenManager.swift; sourceTree = "<group>"; };
 		BF5445F722F8732A003F7A30 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		BF747BEA248C83DE0045174D /* sharp.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; path = sharp.m4r; sourceTree = "<group>"; };
 		BF747BEC248C83EB0045174D /* eventually.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; path = eventually.m4r; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				BFE28F3A22F7A9CB005C979E /* ViewController.swift */,
+				BF4D81B1265A4E6800AEEF92 /* SwitchCell.swift */,
 				BF85D330247E67860064E805 /* SettingViewController.swift */,
 			);
 			path = modules;
@@ -130,6 +135,7 @@
 				BFBC61ED2483ED3500903F4F /* BreakingState.swift */,
 				BFBE4FB02484DB230077464E /* StateMachine.swift */,
 				BF0A0BB724946ED3003ECABD /* ThemeManager.swift */,
+				BF4D81B5265BFBDD00AEEF92 /* ScreenManager.swift */,
 			);
 			path = main;
 			sourceTree = "<group>";
@@ -432,12 +438,14 @@
 				BFE28F3B22F7A9CB005C979E /* ViewController.swift in Sources */,
 				BFBC61E8248395A700903F4F /* Config.swift in Sources */,
 				BFE28F3922F7A9CB005C979E /* AppDelegate.swift in Sources */,
+				BF4D81B6265BFBDD00AEEF92 /* ScreenManager.swift in Sources */,
 				BFBC61EC2483ED2D00903F4F /* WaitingState.swift in Sources */,
 				BFBE4FB12484DB230077464E /* StateMachine.swift in Sources */,
 				BF5445F822F8732A003F7A30 /* R.generated.swift in Sources */,
 				BF9D1E0C248B64D60092B03C /* Color.swift in Sources */,
 				BFBC61F02483F14B00903F4F /* Notification.swift in Sources */,
 				BF85D331247E67860064E805 /* SettingViewController.swift in Sources */,
+				BF4D81B2265A4E6800AEEF92 /* SwitchCell.swift in Sources */,
 				BFBC61EA2483EC1800903F4F /* WorkingState.swift in Sources */,
 				BF8440A82487917A00305B02 /* PickerView.swift in Sources */,
 			);

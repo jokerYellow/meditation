@@ -60,3 +60,6 @@
 
 /* 秒钟 */
 "seconds" = " seconds";
+
+/* 保持长亮 */
+"保持长亮" = "Keep Screen On";

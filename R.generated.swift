@@ -90,7 +90,7 @@ struct R: Rswift.Validatable {
       fileprivate init() {}
     }
     
-    /// This `R.string.localizable` struct is generated, and contains static references to 28 localization keys.
+    /// This `R.string.localizable` struct is generated, and contains static references to 29 localization keys.
     struct localizable {
       /// en translation:  minutes
       /// 
@@ -128,6 +128,10 @@ struct R: Rswift.Validatable {
       /// 
       /// Locales: en, zh-Hans
       static let 已经休息了开始下一个番茄吧 = Rswift.StringResource(key: "已经休息%@了，开始下一个番茄吧", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
+      /// en translation: Keep Screen On
+      /// 
+      /// Locales: en, zh-Hans
+      static let 保持长亮 = Rswift.StringResource(key: "保持长亮", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "zh-Hans"], comment: nil)
       /// en translation: Let's go
       /// 
       /// Locales: en, zh-Hans
@@ -266,6 +270,13 @@ struct R: Rswift.Validatable {
       /// Locales: en, zh-Hans
       static func 已经休息了开始下一个番茄吧(_ value1: String) -> String {
         return String(format: NSLocalizedString("已经休息%@了，开始下一个番茄吧", bundle: R.hostingBundle, comment: ""), locale: R.applicationLocale, value1)
+      }
+      
+      /// en translation: Keep Screen On
+      /// 
+      /// Locales: en, zh-Hans
+      static func 保持长亮(_: Void = ()) -> String {
+        return NSLocalizedString("保持长亮", bundle: R.hostingBundle, comment: "")
       }
       
       /// en translation: Let's go

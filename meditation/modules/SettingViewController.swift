@@ -18,6 +18,7 @@ struct SettingItem {
     var accessoryType : UITableViewCell.AccessoryType = .disclosureIndicator
     var value : (()->String)?
     var trigger : ((UITableViewCell)->Void)?
+    var cell : (()->UITableViewCell)?
 }
 
 class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
@@ -60,7 +61,22 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             }))
                             alert.popoverPresentationController?.sourceView = cell
                             self.present(alert, animated: true, completion: nil)
-        })])
+        }),
+                                SettingItem.init(title: NSLocalizedString("保持长亮", comment: ""), accessoryType: .detailDisclosureButton, value: { () -> String in
+                                    return "aa"
+                                },  trigger: { [unowned self](cell) in
+                                    
+                                }, cell: { () -> UITableViewCell in
+                                    let cell =  SwitchCell.init(style: .value1, reuseIdentifier: nil);
+                                    cell.valueChange = { [unowned self]v in
+                                        self.config.isLongLighting = v
+                                        Util.saveInfo(info: self.config, t: .config)
+                                        ScreenManager.shared.refresh()
+                                    }
+                                    cell.value = self.config.isLongLighting
+                                    return cell
+                                })
+                              ])
         let other = SettingItemGroup.init(title: NSLocalizedString("其他",comment: ""),
         items: [
             SettingItem.init(title: NSLocalizedString("微博",comment: ""),
@@ -165,6 +181,11 @@ class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = sources[indexPath.section].items[indexPath.row]
+        if let cell = item.cell?() as? SwitchCell{
+            cell.textLabel?.text = sources[indexPath.section].items[indexPath.row].title
+            return cell
+        }
         let cell = UITableViewCell.init(style: .value1, reuseIdentifier: nil)
         cell.textLabel?.text = sources[indexPath.section].items[indexPath.row].title
         cell.detailTextLabel?.text = sources[indexPath.section].items[indexPath.row].value?()

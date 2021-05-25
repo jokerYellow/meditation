@@ -67,6 +67,8 @@ class ViewController: UIViewController {
     
     var isStoping = false
     
+    let motto = MottoView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(self.backImage)
@@ -111,7 +113,13 @@ class ViewController: UIViewController {
         self.animationView.addSubview(self.timerLabel)
         self.timerLabel.snp.makeConstraints { (make) in
             make.center.equalTo(self.animationView)
-        } 
+        }
+        self.view.addSubview(motto)
+        motto.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(self.animationView.snp.bottom).offset(50)
+            make.width.equalTo(self.view).offset(-20)
+        }
         // Do any additional setup after loading the view.
     }
     

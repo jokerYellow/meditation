@@ -15,6 +15,7 @@ enum StoreType:String{
     case state = "state"
     case config = "config"
     case theme = "theme"
+    case motto = "motto"
     
     static var storedDirectory : URL {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!

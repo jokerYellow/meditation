@@ -30,7 +30,14 @@ class MottoView: UIView {
             make.edges.equalTo(self)
         }
         motto.requestMotto { (m) in
-            self.label.text = m
+            let att = NSMutableAttributedString.init(string: m)
+            let p = NSMutableParagraphStyle.init()
+            p.lineSpacing = 10
+            let range = NSRange.init(location: 0, length: m.count)
+            att.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 20), range: range)
+            p.alignment = .center
+            att.addAttribute(NSAttributedString.Key.paragraphStyle, value: p, range: range)
+            self.label.attributedText = att
         }
     }
     

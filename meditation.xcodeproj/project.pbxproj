@@ -23,6 +23,7 @@
 		BF85D333247E6DE00064E805 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF85D332247E6DE00064E805 /* Meditation.swift */; };
 		BF8A8E0624948C70002E2C3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF8A8E0524948C70002E2C3D /* LaunchScreen.storyboard */; };
 		BF9D1E0C248B64D60092B03C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D1E0B248B64D60092B03C /* Color.swift */; };
+		BF9DECCD26633F3B007A5A86 /* NihongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9DECCC26633F3B007A5A86 /* NihongViewController.swift */; };
 		BFBC61E8248395A700903F4F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBC61E7248395A700903F4F /* Config.swift */; };
 		BFBC61EA2483EC1800903F4F /* WorkingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBC61E92483EC1800903F4F /* WorkingState.swift */; };
 		BFBC61EC2483ED2D00903F4F /* WaitingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBC61EB2483ED2D00903F4F /* WaitingState.swift */; };
@@ -67,6 +68,7 @@
 		BF85D334247E70490064E805 /* meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = meditation.entitlements; sourceTree = "<group>"; };
 		BF8A8E0524948C70002E2C3D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF9D1E0B248B64D60092B03C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		BF9DECCC26633F3B007A5A86 /* NihongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NihongViewController.swift; sourceTree = "<group>"; };
 		BFBC61E7248395A700903F4F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		BFBC61E92483EC1800903F4F /* WorkingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingState.swift; sourceTree = "<group>"; };
 		BFBC61EB2483ED2D00903F4F /* WaitingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingState.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				BFE28F3A22F7A9CB005C979E /* ViewController.swift */,
 				BF4D81B1265A4E6800AEEF92 /* SwitchCell.swift */,
 				BF85D330247E67860064E805 /* SettingViewController.swift */,
+				BF9DECCC26633F3B007A5A86 /* NihongViewController.swift */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				BF0A0BB824946ED3003ECABD /* ThemeManager.swift in Sources */,
 				BFBC61EE2483ED3500903F4F /* BreakingState.swift in Sources */,
 				BFE28F3B22F7A9CB005C979E /* ViewController.swift in Sources */,
+				BF9DECCD26633F3B007A5A86 /* NihongViewController.swift in Sources */,
 				BFBC61E8248395A700903F4F /* Config.swift in Sources */,
 				BFE28F3922F7A9CB005C979E /* AppDelegate.swift in Sources */,
 				BF4D81B6265BFBDD00AEEF92 /* ScreenManager.swift in Sources */,
@@ -614,7 +618,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = meditation/meditation.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 4USFLE6SEH;
 				INFOPLIST_FILE = meditation/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -638,7 +642,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = meditation/meditation.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 4USFLE6SEH;
 				INFOPLIST_FILE = meditation/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;

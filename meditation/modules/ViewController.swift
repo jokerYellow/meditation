@@ -111,13 +111,19 @@ class ViewController: UIViewController {
         self.animationView.addSubview(self.timerLabel)
         self.timerLabel.snp.makeConstraints { (make) in
             make.center.equalTo(self.animationView)
-        } 
+        }
+        self.settingButton.addTarget(self, action: #selector(gotoNihong), for: .touchUpOutside)
         // Do any additional setup after loading the view.
     }
     
     @objc func gotoSetting() {
         self.present(UINavigationController.init(rootViewController: SettingViewController()), animated: true, completion: nil)
     }
+    
+    @objc func gotoNihong() {
+        self.present(UINavigationController.init(rootViewController: MyViewController()), animated: true, completion: nil)
+    }
+    
     
     func refreshState(state:Meditation.State){
         defer {

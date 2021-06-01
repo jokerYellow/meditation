@@ -135,16 +135,16 @@ class Meditation : NSObject, StateMachineDelegate{
             case .wait:
                 self.stopTimer()
             }
-            self.stateCallBack?(self.state)
+            self.refreshState()
             Util.saveInfo(info: self.state, t: .state)
         }
     }
     
     var stateMachine : StateMachine!
 
-    var stateCallBack: ((State) -> Void)? {
+    var stateCallBackes = [(State) -> Void]() {
         didSet {
-            self.stateCallBack?(self.state)
+            self.refreshState()
         }
     }
     
@@ -168,6 +168,16 @@ class Meditation : NSObject, StateMachineDelegate{
         self.stateMachine = MapMachine(state: state, delegate: self)
     }
     
+    func addStateCallBack(callBack: @escaping (State) -> Void){
+        self.stateCallBackes.append(callBack)
+    }
+    
+    func refreshState(){
+        self.stateCallBackes.forEach({ (call) in
+            call(self.state)
+        })
+    }
+    
     func trigger() {
         self.state = self.stateMachine.trigger()
         self.stateMachine = MapMachine(state: self.state,delegate: self)
@@ -176,7 +186,7 @@ class Meditation : NSObject, StateMachineDelegate{
     func startTimer() {
         let timer = Timer.init(timeInterval: 1, repeats: true) { (_) in
             self.selfCheck()
-            self.stateCallBack?(self.state)
+            self.refreshState()
         }
         RunLoop.main.add(timer, forMode: .common)
         self.timer = timer

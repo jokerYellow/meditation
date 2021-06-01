@@ -72,3 +72,19 @@ extension UIColor {
         return image
     }
 }
+
+
+extension UIImage{
+    
+    static func image(color:UIColor) -> UIImage {
+        let rect = CGRect.init(origin: CGPoint.zero, size: .init(width: 1, height: 1))
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context?.setFillColor(color.cgColor)
+        context?.addRect(rect)
+        context?.fill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return image
+    }
+}

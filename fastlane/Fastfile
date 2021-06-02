@@ -50,9 +50,9 @@ platform :ios do
     )
     upload_to_app_store(
       username:"592679546@qq.com",
-      skip_screenshots:true,
-      force:true,
-      submit_for_review:true,
+      skip_screenshots:false,
+      force:false,
+      submit_for_review:false,
       submission_information:{
         add_id_info_uses_idfa:false,
         export_compliance_uses_encryption:false

@@ -8,6 +8,16 @@
 
 import UIKit
 
+
+let shenseColor =  UIColor.init(red: 142.0/255.0, green: 41.0/255.0, blue: 84.0/255.0, alpha: 1)
+
+let qianseColor = UIColor.init(red: 1, green: 167.0/255.0, blue: 201.0/255.0, alpha: 1)
+
+let blueShenseColor =  UIColor.init(red: 55.0/255.0, green: 175.0/255.0, blue: 219.0/255.0, alpha: 1)
+
+let blueQianseColor = UIColor.init(red: 128.0/255.0, green: 211.0/255.0, blue: 243.0/255.0, alpha: 1)
+
+
 let font = UIFont.init(name: "Hiragino Maru Gothic ProN", size: 20) ?? UIFont.systemFont(ofSize: 20)
 let strokeTextAttributes =  [
     NSAttributedString.Key.foregroundColor :  blueShenseColor,

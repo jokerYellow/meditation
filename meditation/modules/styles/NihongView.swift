@@ -8,22 +8,22 @@
 
 import UIKit
 
+let font = UIFont.init(name: "Hiragino Maru Gothic ProN", size: 20) ?? UIFont.systemFont(ofSize: 20)
+let strokeTextAttributes =  [
+    NSAttributedString.Key.foregroundColor :  blueShenseColor,
+    NSAttributedString.Key.font : font
+    ] as [NSAttributedString.Key : Any]
+let highlightStrokeTextAttributes =  [
+    NSAttributedString.Key.foregroundColor :  blueQianseColor,
+    NSAttributedString.Key.font : font
+    ] as [NSAttributedString.Key : Any]
+
 class NihongView: UIView {
     
     static func button()->UIButton{
         let button = UIButton.init(type: .custom)
-        let font = UIFont.init(name: "Hiragino Maru Gothic ProN", size: 20) ?? UIFont.systemFont(ofSize: 20)
-        let strokeTextAttributes =  [
-            NSAttributedString.Key.foregroundColor :  blueShenseColor,
-            NSAttributedString.Key.font : font
-            ] as [NSAttributedString.Key : Any]
-        let highlightStrokeTextAttributes =  [
-            NSAttributedString.Key.foregroundColor :  blueQianseColor,
-            NSAttributedString.Key.font : font
-            ] as [NSAttributedString.Key : Any]
-       
-        button.setAttributedTitle(NSAttributedString.init(string: NSLocalizedString("开始", comment: "开始番茄钟按钮"), attributes: strokeTextAttributes), for: .normal)
-        button.setAttributedTitle(NSAttributedString.init(string: NSLocalizedString("开始", comment: "开始番茄钟按钮"), attributes: highlightStrokeTextAttributes), for: .highlighted)
+        button.setAttributedTitle(NSAttributedString.init(string: NSLocalizedString("begin", comment: "开始"), attributes: strokeTextAttributes), for: .normal)
+        button.setAttributedTitle(NSAttributedString.init(string: NSLocalizedString("begin", comment: "开始"), attributes: highlightStrokeTextAttributes), for: .highlighted)
         return button
     }
     
@@ -47,6 +47,7 @@ class NihongView: UIView {
     let borderCopy = CAShapeLayer()
     let buttonCopy : UIButton = NihongView.button()
     let timeLabelCopy =  UILabel()
+    let separeteView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,11 +60,14 @@ class NihongView: UIView {
         nihongLayer.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
+        separeteView.backgroundColor = UIColor.black
         self.insertSubview(backLayer, at: 0)
         self.border.addSublayer(self.dot)
         self.timeLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(nihongLayer)
             make.top.equalTo(nihongLayer).offset(200)
+            make.width.greaterThanOrEqualTo(200)
+            make.height.greaterThanOrEqualTo(60)
         }
         nihongLayer.addSubview(self.button)
         self.button.snp.makeConstraints { (make) in
@@ -81,13 +85,19 @@ class NihongView: UIView {
         self.timeLabelCopy.snp.makeConstraints { (make) in
             make.centerX.equalTo(nihongCopy)
             make.top.equalTo(nihongCopy).offset(200)
+            make.width.greaterThanOrEqualTo(200)
+            make.height.greaterThanOrEqualTo(60)
         }
         self.buttonCopy.snp.makeConstraints { (make) in
             make.bottom.equalTo(nihongCopy).offset(-200)
             make.centerX.equalTo(nihongCopy)
         }
         self.insertSubview(self.nihongCopy, at: 0)
+        self.insertSubview(self.separeteView, at: 1)
         self.nihongCopy.snp.makeConstraints { (make) in
+            make.edges.equalTo(self)
+        }
+        self.separeteView.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
     }
@@ -99,21 +109,31 @@ class NihongView: UIView {
         if isStoping {
             return
         }
+        button.setAttributedTitle(NSAttributedString.init(string: state.title, attributes: strokeTextAttributes), for: .normal)
+        button.setAttributedTitle(NSAttributedString.init(string: state.title, attributes: highlightStrokeTextAttributes), for: .highlighted)
+        let refresh :(CGFloat,Bool)->Void = { (fontSize,isEmpty) in
+            self.setText(content: state.lastTime,isEmpty: isEmpty, label: self.timeLabel,fontsize:fontSize)
+            self.setText(content: state.lastTime,isEmpty: false, label: self.timeLabelCopy,fontsize:fontSize)
+            self.renderNihong(radius: 6)
+        }
         switch state {
         case .wait:
             if let s = self.state, s != state{
                 self.stopWork()
                 return
             }
+            refresh(40,false)
         case .isWorking, .isBreak:
+            var isEmpty = false
+            if case .isBreak(_,_,_) = state {
+                isEmpty = false
+            }
+            refresh(60, isEmpty)
             if self.state != state{
                 self.beginAnimation()
             }
         }
-        self.button.setTitle(state.title, for: .normal)
-        self.setText(content: state.lastTime, label: self.timeLabel)
-        self.setText(content: state.lastTime,isEmpty: false, label: self.timeLabelCopy)
-        self.renderNihong(radius: 6)
+
     }
     
     @objc func click() -> Void {
@@ -123,6 +143,26 @@ class NihongView: UIView {
     func stopWork(){
         self.button.isEnabled = false
         self.isStoping = true
+        self.dot.opacity = 0;
+        let duration : TimeInterval = 0.5
+        UIView.animate(withDuration: duration, animations: {
+            self.timeLabel.alpha = 0
+            self.backLayer.alpha = 0
+        }) { (_) in
+            
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            self.backLayer.layer.removeAllAnimations()
+            self.dot.removeAllAnimations()
+            self.border.removeAllAnimations()
+            self.isStoping = false
+            self.refreshState(state: self.meditation.state)
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                self.timeLabel.alpha = 1
+            }, completion: { (_) in
+                self.button.isEnabled = true
+            })
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -130,6 +170,7 @@ class NihongView: UIView {
     }
     
     func beginAnimation()  {
+        self.dot.opacity = 1;
         backLayer.layer.add(animation(), forKey: nil)
         border.add(animation(), forKey: nil)
         self.dot.frame = CGRect.init(origin: .zero, size: CGSize.init(width: 2, height: 2))
@@ -186,7 +227,7 @@ class NihongView: UIView {
         let outImage =  UIImage.init(cgImage: cgImage)
         backLayer.frame = nihongCopy.bounds
         backLayer.image = outImage
-        backLayer.alpha = 1
+        backLayer.alpha = 0
     }
     
 
@@ -214,12 +255,12 @@ class NihongView: UIView {
     }
     */
     
-    func setText(content:String,isEmpty:Bool = true,label:UILabel) {
+    func setText(content:String,isEmpty:Bool = true,label:UILabel,fontsize:CGFloat = 60) {
         let shadow = NSShadow()
         shadow.shadowBlurRadius = 2
         shadow.shadowColor = UIColor.white
         shadow.shadowOffset = .init(width: 0, height: 0)
-        let font = UIFont.init(name: "Hiragino Maru Gothic ProN", size: 60) ?? UIFont.systemFont(ofSize: 60)
+        let font = UIFont.init(name: "Hiragino Maru Gothic ProN", size: fontsize) ?? UIFont.systemFont(ofSize: fontsize)
         let strokeTextAttributes = isEmpty ?  [
             NSAttributedString.Key.foregroundColor : isEmpty ? UIColor.clear : blueShenseColor,
             NSAttributedString.Key.strokeColor : blueShenseColor,

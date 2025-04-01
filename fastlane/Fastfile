@@ -16,8 +16,8 @@
 default_platform(:ios)
 xcode_select "/Applications/Xcode.app"
 
-pgy_api_key = "7510aea87151d7e4b7a1727af4878656"
-pgy_user_key = "bbd4d0a618736051bd9e382f19672b43"
+pgy_api_key = "{replace_your_pgy_api_key}"
+pgy_user_key = "{replace_your_pgy_user_key}"
 
 platform :ios do
   desc "Description of what the lane does"
